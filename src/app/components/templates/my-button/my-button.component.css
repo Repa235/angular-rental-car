@@ -1,0 +1,22 @@
+.btn-outline-secondary.capsuleSx {
+  border-bottom-right-radius: 0px;
+  border-top-right-radius: 0px;
+}
+
+.btn-outline-secondary.capsuleDx {
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 0px;
+}
+
+.btn-outline-secondary.capsuleCenter {
+  border-radius: 0px;
+}
+
+.btn-secondary.capsuleCenter {
+  border-radius: 0px;
+}
+
+.btn-secondary.princButton {
+  width: 161px;
+  border-radius: 0px;
+}
