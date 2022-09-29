@@ -5,16 +5,24 @@ import { AppComponent } from './app.component';
 import { HomepageComponent } from './components/homepage/homepage.component';
 import { HeaderComponent } from './components/templates/my-header/header.component';
 import { MyFooterComponent } from './components/templates/my-footer/my-footer.component';
+import { LoginFormComponent } from './components/forms/login-form/login-form.component';
 
+import { RouterModule } from '@angular/router';
 @NgModule({
   declarations: [
     AppComponent,
     HomepageComponent,
     HeaderComponent,
-    MyFooterComponent
+    MyFooterComponent,
+    LoginFormComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    RouterModule.forRoot([
+      {path: 'homepage', component: HomepageComponent},
+      {path: 'form-login', component: LoginFormComponent},
+      {path: '', redirectTo: '/homepage', pathMatch: 'full'},
+    ])
   ],
   providers: [],
   bootstrap: [AppComponent]
