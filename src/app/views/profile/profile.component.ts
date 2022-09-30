@@ -10,17 +10,11 @@ import {USERS} from "../../mock-users";
 })
 export class ProfileComponent implements OnInit {
 
-  users: User[] = USERS
+
 
   constructor(private userService: UserService) { }
 
-  ngOnInit(): void {
-    this.getUsers;
-  }
+  ngOnInit(): void {}
 
-  getUsers(): void{
-    this.userService.getUsers().subscribe(users => this.users=users)
-    console.log('Users: ' + this.users)
-  }
 
 }

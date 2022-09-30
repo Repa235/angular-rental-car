@@ -42,9 +42,7 @@ import { UserListComponent } from './components/lists/user-list/user-list.compon
       {path: '', redirectTo: '/homepage', pathMatch: 'full'},
     ]),
     HttpClientModule,
-    HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService, { dataEncapsulation: false }
-    )
+    HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService)
   ],
   providers: [],
   bootstrap: [AppComponent]

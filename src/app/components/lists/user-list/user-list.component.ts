@@ -16,7 +16,7 @@ import {MyTableConfig} from "../../templates/my-table/config/MyTableConfig";
 })
 export class UserListComponent implements OnInit {
 
-  users: User[] = USERS
+  users: User[] = []
 
   order!: MyOrder;
   search!: MySearch;
@@ -28,11 +28,11 @@ export class UserListComponent implements OnInit {
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
-    this.getUsers;
+    this.getUsers();
 
     this.actions = [{text: 'Edit', buttonTop: false, customClass: 'btn'},
       {text: 'Delete', buttonTop: false, customClass: 'btn'},
-      {text: 'Add', buttonTop: true, customClass: 'btn'}]
+      {text: 'Add', buttonTop: true, customClass: 'btn btn-secondary princButton'}]
     this.order = {defaultColumn: "id", orderType: "asc"}
     this.search = {columns: ["id", "name", "surname"]};
     this.pagination = {itemPerPage: 3, itemPerPageOptions: [3, 6, 9]};
@@ -50,8 +50,8 @@ export class UserListComponent implements OnInit {
   }
 
   getUsers(): void{
-    this.userService.getUsers().subscribe(users => this.users=users)
-    console.log('Users: ' + this.users)
+    this.users = this.userService.getUsers()
+    console.log('Users: ' + this.users.toString())
   }
 
 }
