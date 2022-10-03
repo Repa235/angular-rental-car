@@ -1,8 +1,8 @@
 export interface Rent {
   id: number;
-  idUtente: number;
-  idVeicolo: number;
-  dataInizio: string;
-  dataFine: string;
-  isApprovato: boolean;
+  userId: number;
+  vehicleId: number;
+  startDate: string;
+  endDate: string;
+  isApproved: boolean;
 }
