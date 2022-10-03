@@ -20,8 +20,12 @@ export class InMemoryDataService implements InMemoryDbService {
     const rents = [
       {id:1, userId:1, vehicleId: 1, startDate: '', endDate: '', isApproved: false},
       {id:2, userId:1, vehicleId: 1, startDate: '', endDate: '', isApproved: false},
+    ];
+
+    const vehicles = [
+      {id:1, carBrand:'Pegassi', model:'Zentorno', registrationYear:1999,type:'Supercar', rents:undefined }
     ]
-    return { users, rents };
+    return { users, rents, vehicles };
 
 
   }

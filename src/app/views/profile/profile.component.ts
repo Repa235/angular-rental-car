@@ -12,7 +12,7 @@ export class ProfileComponent implements OnInit {
 
 
 
-  constructor(private userService: UserService) { }
+  constructor() { }
 
   ngOnInit(): void {}
 

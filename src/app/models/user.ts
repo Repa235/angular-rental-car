@@ -1,3 +1,5 @@
+import {Rent} from "./rent";
+
 export interface User {
   id: number;
   username: string;
@@ -6,4 +8,5 @@ export interface User {
   password: string;
   birthday: string;
   role: string;
+  rents?: Rent[];
 }

@@ -1,10 +1,10 @@
 <!-- INPUT GROUP -->
 <div class="input-group mx-auto">
-  <span class="input-group-text">Filtra per:</span>
+  <span class="input-group-text">Filter by:</span>
   <select class="form-select" #column>
     <option *ngFor="let column of tableConfig.search.columns">{{column}}</option>
   </select>
-  <span class="input-group-text">Testo da cercare:</span>
+  <span class="input-group-text">Text to search:</span>
   <input type="text" class="form-control" (keyup)="searchText($event.target, column.value)">
   <ng-container *ngFor="let a of tableConfig.actions">
     <app-my-button *ngIf="a.buttonTop===true" (click)="clickButton({text:a.text},null)"
@@ -48,7 +48,7 @@
 <!-- PAGINATION -->
 <div class="input-group mb-3">
   <div class="input-group mb-auto" style="width: 20%">
-    <button class="btn btn-secondary" disabled> Elementi per pagina:</button>
+    <button class="btn btn-secondary" disabled> Elements per page:</button>
     <select class="form-select" (change)="changeItemPerPage($event.target)">
       <option *ngFor="let number of tableConfig.pagination.itemPerPageOptions">{{number}}</option>
     </select>
@@ -106,7 +106,7 @@
   </div>
 
   <div class="input-group mb-auto" style="width: 20%; margin-left: 2%">
-    <button class="btn btn-secondary" disabled>Vai alla pagina</button>
+    <button class="btn btn-secondary" disabled>Go to page</button>
     <select class="form-select" (change)="searchPage($event.target)" #toPage>
       <option *ngFor="let p of arrayPages">{{p}}</option>
     </select>

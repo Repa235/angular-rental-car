@@ -19,6 +19,8 @@ import {PaginationPipe} from "./components/templates/my-table/pipes/pagination.p
 import {SortPipePipe} from "./components/templates/my-table/pipes/sort-pipe.pipe";
 import { UserListComponent } from './components/lists/user-list/user-list.component';
 import { RentListComponent } from './components/lists/rent-list/rent-list.component';
+import { VehicleListComponent } from './components/lists/vehicle-list/vehicle-list.component';
+import { AutoparkComponent } from './views/autopark/autopark.component';
 
 @NgModule({
   declarations: [
@@ -33,13 +35,16 @@ import { RentListComponent } from './components/lists/rent-list/rent-list.compon
     PaginationPipe,
     SortPipePipe,
     UserListComponent,
-    RentListComponent
+    RentListComponent,
+    VehicleListComponent,
+    AutoparkComponent
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot([
       {path: 'homepage', component: HomepageComponent},
       {path: 'profile', component: ProfileComponent},
+      {path: 'autopark', component: AutoparkComponent},
 
       {path: '', redirectTo: '/homepage', pathMatch: 'full'},
     ]),
