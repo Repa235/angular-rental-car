@@ -18,6 +18,7 @@ import {MyButtonComponent} from "./components/templates/my-button/my-button.comp
 import {PaginationPipe} from "./components/templates/my-table/pipes/pagination.pipe";
 import {SortPipePipe} from "./components/templates/my-table/pipes/sort-pipe.pipe";
 import { UserListComponent } from './components/lists/user-list/user-list.component';
+import { RentListComponent } from './components/lists/rent-list/rent-list.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { UserListComponent } from './components/lists/user-list/user-list.compon
     MyButtonComponent,
     PaginationPipe,
     SortPipePipe,
-    UserListComponent
+    UserListComponent,
+    RentListComponent
   ],
   imports: [
     BrowserModule,
