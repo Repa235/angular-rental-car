@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {User} from "../../../models/user";
-import {USERS} from "../../../mock-users";
 import {UserService} from "../../../services/user.service";
 import {MyOrder} from "../../templates/my-table/config/MyOrder";
 import {MySearch} from "../../templates/my-table/config/MySearch";
@@ -16,7 +14,7 @@ import {MyTableConfig} from "../../templates/my-table/config/MyTableConfig";
 })
 export class UserListComponent implements OnInit {
 
-  users: User[] = []
+  users: any = []
 
   order!: MyOrder;
   search!: MySearch;
@@ -49,9 +47,11 @@ export class UserListComponent implements OnInit {
     }
   }
 
-  getUsers(): void{
-    this.users = this.userService.getUsers()
-    console.log('Users: ' + this.users.toString())
+  getUsers(): void {
+    this.userService.getUsers()
+      .subscribe(users => this.users = users);
   }
+
+
 
 }
