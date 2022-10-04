@@ -1,0 +1,26 @@
+<app-my-header-profile></app-my-header-profile>
+<div *ngIf="formType==='u'" class="container my-5">
+  <h2 style="margin-bottom: 2%" >Dati utente</h2>
+  <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+    <app-user-form></app-user-form>
+  </div>
+</div>
+<div *ngIf="formType==='v'" class="container my-5">
+  <h2 style="margin-bottom: 2%" >Dati veicolo</h2>
+  <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+    <app-vehicle-form></app-vehicle-form>
+  </div>
+</div>
+
+<div *ngIf="formType==='r'" class="container my-5">
+  <h2 style="margin-bottom: 2%" >Dati prenotazione</h2>
+  <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+    <app-rent-form *ngIf="formType=='r'" ></app-rent-form>
+  </div>
+</div>
+
+<div *ngIf="formType!=='r' && formType!=='v' && formType!=='u' " class="container my-5">
+  <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+    <h2 style="margin-bottom: 3%" >Operazione non riconosciuta</h2>
+  </div>
+</div>

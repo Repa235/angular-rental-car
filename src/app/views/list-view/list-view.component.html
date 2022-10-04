@@ -1,0 +1,13 @@
+<app-my-header-profile></app-my-header-profile>
+<div class="container my-5">
+  <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+    <ng-container *ngIf="listType==='r'">
+      <h2>Rents list</h2>
+      <app-rent-list></app-rent-list>
+    </ng-container>
+    <ng-container *ngIf="listType==='v'">
+      <h2>Vehicle list</h2>
+      <app-vehicle-list></app-vehicle-list>
+    </ng-container>
+  </div>
+</div>

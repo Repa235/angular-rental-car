@@ -21,6 +21,11 @@ import { UserListComponent } from './components/lists/user-list/user-list.compon
 import { RentListComponent } from './components/lists/rent-list/rent-list.component';
 import { VehicleListComponent } from './components/lists/vehicle-list/vehicle-list.component';
 import { AutoparkComponent } from './views/autopark/autopark.component';
+import { UserFormComponent } from './components/forms/user-form/user-form.component';
+import { FormViewComponent } from './views/form-view/form-view.component';
+import { VehicleFormComponent } from './components/forms/vehicle-form/vehicle-form.component';
+import { RentFormComponent } from './components/forms/rent-form/rent-form.component';
+import { ListViewComponent } from './views/list-view/list-view.component';
 
 @NgModule({
   declarations: [
@@ -37,14 +42,20 @@ import { AutoparkComponent } from './views/autopark/autopark.component';
     UserListComponent,
     RentListComponent,
     VehicleListComponent,
-    AutoparkComponent
+    AutoparkComponent,
+    UserFormComponent,
+    FormViewComponent,
+    VehicleFormComponent,
+    RentFormComponent,
+    ListViewComponent
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot([
       {path: 'homepage', component: HomepageComponent},
       {path: 'profile', component: ProfileComponent},
-      {path: 'autopark', component: AutoparkComponent},
+      {path: 'list', component: ListViewComponent},
+      {path: 'form', component: FormViewComponent},
 
       {path: '', redirectTo: '/homepage', pathMatch: 'full'},
     ]),
