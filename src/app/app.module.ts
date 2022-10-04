@@ -26,6 +26,8 @@ import { FormViewComponent } from './views/form-view/form-view.component';
 import { VehicleFormComponent } from './components/forms/vehicle-form/vehicle-form.component';
 import { RentFormComponent } from './components/forms/rent-form/rent-form.component';
 import { ListViewComponent } from './views/list-view/list-view.component';
+import { LoginFormComponent } from './components/forms/login-form/login-form.component';
+
 
 @NgModule({
   declarations: [
@@ -47,7 +49,8 @@ import { ListViewComponent } from './views/list-view/list-view.component';
     FormViewComponent,
     VehicleFormComponent,
     RentFormComponent,
-    ListViewComponent
+    ListViewComponent,
+    LoginFormComponent,
   ],
   imports: [
     BrowserModule,
