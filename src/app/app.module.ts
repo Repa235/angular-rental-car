@@ -11,16 +11,13 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService} from "./services/in-memory-data.service";
-import { ProfileComponent } from './views/profile/profile.component';
-import { MyHeaderProfileComponent } from './components/templates/my-header-profile/my-header-profile.component';
+
 import {MyTableComponent} from "./components/templates/my-table/my-table.component";
 import {MyButtonComponent} from "./components/templates/my-button/my-button.component";
 import {PaginationPipe} from "./components/templates/my-table/pipes/pagination.pipe";
 import {SortPipePipe} from "./components/templates/my-table/pipes/sort-pipe.pipe";
-import { UserListComponent } from './components/lists/user-list/user-list.component';
-import { RentListComponent } from './components/lists/rent-list/rent-list.component';
-import { VehicleListComponent } from './components/lists/vehicle-list/vehicle-list.component';
-import { AutoparkComponent } from './views/autopark/autopark.component';
+
+
 import { UserFormComponent } from './components/forms/user-form/user-form.component';
 import { FormViewComponent } from './views/form-view/form-view.component';
 import { VehicleFormComponent } from './components/forms/vehicle-form/vehicle-form.component';
@@ -29,22 +26,17 @@ import { ListViewComponent } from './views/list-view/list-view.component';
 import { LoginFormComponent } from './components/forms/login-form/login-form.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
     HomepageComponent,
     HeaderComponent,
     MyFooterComponent,
-    ProfileComponent,
-    MyHeaderProfileComponent,
     MyTableComponent,
     MyButtonComponent,
     PaginationPipe,
     SortPipePipe,
-    UserListComponent,
-    RentListComponent,
-    VehicleListComponent,
-    AutoparkComponent,
     UserFormComponent,
     FormViewComponent,
     VehicleFormComponent,
@@ -56,7 +48,6 @@ import { LoginFormComponent } from './components/forms/login-form/login-form.com
     BrowserModule,
     RouterModule.forRoot([
       {path: 'homepage', component: HomepageComponent},
-      {path: 'profile', component: ProfileComponent},
       {path: 'list', component: ListViewComponent},
       {path: 'form', component: FormViewComponent},
 

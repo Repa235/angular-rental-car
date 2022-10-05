@@ -1,13 +1,16 @@
-<app-my-header-profile></app-my-header-profile>
 <div class="container my-5">
   <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
     <ng-container *ngIf="listType==='r'">
       <h2>Rents list</h2>
-      <app-rent-list></app-rent-list>
+      <app-my-table [tableConfig]="tableconfigR" [data]="rents" ></app-my-table>
     </ng-container>
     <ng-container *ngIf="listType==='v'">
-      <h2>Vehicle list</h2>
-      <app-vehicle-list></app-vehicle-list>
+      <h2>Vehicles list</h2>
+      <app-my-table [tableConfig]="tableconfigV" [data]="vehicles" ></app-my-table>
+    </ng-container>
+    <ng-container *ngIf="listType==='u'">
+      <h2>Users list</h2>
+      <app-my-table [tableConfig]="tableconfigU" [data]="users" ></app-my-table>
     </ng-container>
   </div>
 </div>

@@ -5,21 +5,19 @@
 
       <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
         <li><a href="#" routerLink="/" class="nav-link px-2 text-white">Home</a></li>
-        <li><a href="#" routerLink="/autopark" class="nav-link px-2 text-white">Autopark</a></li>
-        <li><a href="#" routerLink="/profile" class="nav-link px-2 text-white">Profile</a></li>
-        <li><a  routerLink="/list" [queryParams]="{lt:'v'}" class="nav-link px-2 text-white">See veihicles</a></li>
+        <li><a  routerLink="/list" [queryParams]="{lt:'v'}" class="nav-link px-2 text-white">Veihicles</a></li>
         <li><a routerLink="/form" [queryParams]="{ft:'r'}" class="nav-link px-2 text-white">Rent a vehicle</a></li>
         <li><a routerLink="/form" [queryParams]="{ft:'u'}" class="nav-link px-2 text-white">Change your data</a></li>
         <li><a  routerLink="/form" [queryParams]="{ft:'u'}" class="nav-link px-2 text-white">Add a user</a></li>
         <li><a routerLink="/form" [queryParams]="{ft:'v'}" class="nav-link px-2 text-white">Add a vehicle</a></li>
-        <li><a class="nav-link px-2 text-white" routerLink="/list" [queryParams]="{lt:'r'}">See all rents</a></li>
+        <li><a routerLink="/list" [queryParams]="{lt:'r'}"  class="nav-link px-2 text-white" >Rents</a></li>
+        <li><a routerLink="/list" [queryParams]="{lt:'u'}"  class="nav-link px-2 text-white" >Users</a></li>
       </ul>
 
 
 
       <div class="text-end">
         <a href="#"  routerLink="/" class="nav-link px-2 text-white">Login</a>
-        <a href="#"  routerLink="/" class="nav-link px-2 text-white">Logout</a>
       </div>
 
     </div>
