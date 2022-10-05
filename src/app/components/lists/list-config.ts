@@ -9,9 +9,9 @@ import {MyTableConfig} from "../templates/my-table/config/MyTableConfig";
 
 
 //Actions
-let actionButtons: MyActions[] = [{text: 'Edit', buttonTop: false, customClass: 'btn'},
-  {text: 'Delete', buttonTop: false, customClass: 'btn'},
-  {text: 'Add', buttonTop: true, customClass: 'btn btn-secondary princButton'}]
+let actionButtons: MyActions[] = [{text: 'Edit', buttonTop: false, customClass: 'btn btn-outline-secondary princButton'},
+  {text: 'Delete', buttonTop: false, customClass: 'btn btn-outline-secondary princButton'},
+  {text: 'Add', buttonTop: true, customClass: 'btn btn-outline-secondary princButton'}]
 let order: MyOrder = {defaultColumn: "id", orderType: "asc"}
 //Searchs
 let searchR: MySearch = {columns: ["vehicleId", "userId", "id"]};

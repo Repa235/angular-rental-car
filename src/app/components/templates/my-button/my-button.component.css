@@ -16,7 +16,7 @@
   border-radius: 0px;
 }
 
-.btn-secondary.princButton {
-  width: 200px;
+.btn-outline-secondary.princButton {
   border-radius: 0px;
+  width: 100px;
 }

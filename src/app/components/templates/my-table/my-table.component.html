@@ -6,10 +6,10 @@
   </select>
   <span class="input-group-text">Text to search:</span>
   <input type="text" class="form-control" (keyup)="searchText($event.target, column.value)">
-  <ng-container *ngFor="let a of tableConfig.actions">
-    <app-my-button *ngIf="a.buttonTop===true" (click)="clickButton({text:a.text},null)"
+  <ng-container *ngFor="let action of tableConfig.actions">
+    <app-my-button *ngIf="action.buttonTop===true" (click)="clickButton({text:action.text},null)"
                    [buttonConfig]=
-                     "{customCssClass:a.customClass,text:a.text, icon:a.icon}">
+                     "{customCssClass:action.customClass,text:action.text, icon:action.icon}">
     </app-my-button>
   </ng-container>
 </div>
@@ -22,8 +22,8 @@
       {{header.label}}
       <i [ngClass]="[orderType === 'asc' ? 'fa fa-arrow-up' : 'fa fa-arrow-down']"></i>
     </th>
-    <ng-container *ngFor="let a of tableConfig.actions" >
-    <th  *ngIf="a.buttonTop===false"  scope="col" style="width: 80px">
+    <ng-container *ngFor="let action of tableConfig.actions" >
+    <th *ngIf="action.buttonTop===false" scope="col" style="width: 80px">
 
     </th>
     </ng-container>
@@ -31,13 +31,13 @@
   </thead>
   <tbody>
   <tr
-    *ngFor="let d of data  | pagination :numPageSelected:numberItem4Page | sortPipe : key:  orderType ">
-    <th scope="row" *ngFor="let header of tableConfig.headers">{{d[header.key] }}</th>
-    <ng-container *ngFor="let a of tableConfig.actions" >
-        <th scope="row" *ngIf="a.buttonTop===false" >
+    *ngFor="let row of data  | pagination :numPageSelected:numberItem4Page | sortPipe : key:  orderType ">
+    <th scope="row" *ngFor="let header of tableConfig.headers">{{row[header.key] }}</th>
+    <ng-container *ngFor="let action of tableConfig.actions" >
+        <th scope="row" *ngIf="action.buttonTop===false" >
           <app-my-button [buttonConfig]=
-                           "{customCssClass:a.customClass,text:a.text, icon:a.icon}"
-                         (click)="clickButton({text:a.text},d)">
+                           "{customCssClass:action.customClass,text:action.text, icon:action.icon}"
+                         (click)="clickButton({text:action.text},row)">
           </app-my-button>
         </th>
     </ng-container>
