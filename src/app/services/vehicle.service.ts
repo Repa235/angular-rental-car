@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable, of} from "rxjs";
 import {Rent} from "../models/rent";
 import {catchError, tap} from "rxjs/operators";
 import {Vehicle} from "../models/vehicle";
+import {User} from "../models/user";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,8 @@ export class VehicleService {
 
   vehicleURL = 'api/vehicles'
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
 
   private log(message: string) {
@@ -20,7 +22,7 @@ export class VehicleService {
   }
 
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({'Content-Type': 'application/json'})
   };
 
   private handleError<T>(operation = 'operation', result?: T) {
@@ -43,5 +45,28 @@ export class VehicleService {
         tap(_ => this.log('fetched rents')),
         catchError(this.handleError<Vehicle[]>('getVehicle', []))
       );
+  }
+
+  /** GET vehicle by id. Will 404 if id not found */
+  getVehicle(id: number): Observable<Vehicle> {
+    const url = `${this.vehicleURL}/${id}`;
+    return this.http.get<Vehicle>(url)
+      .pipe(
+      tap(_ => this.log(`fetched vehicle id=${id}, ${ this.http.get<Vehicle>(url)}`)),
+      catchError(this.handleError<Vehicle>(` id=${id}`))
+    );
+  }
+
+  addOrUpdateVehicle(vehicle: Vehicle): Observable<any> {
+    if (vehicle.id) {
+      return this.http.put(this.vehicleURL, vehicle, this.httpOptions).pipe(
+        tap(_ => this.log(`updated user id=${vehicle.id}`)),
+        catchError(this.handleError<any>('updateV')));
+    } else {
+      return this.http.post<User>(this.vehicleURL, vehicle, this.httpOptions).pipe(
+        tap((newVehicle: User) => this.log(`added vehicle w/ id=${newVehicle.id}`)),
+        catchError(this.handleError<User>('addV'))
+      );
+    }
   }
 }

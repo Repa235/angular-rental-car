@@ -1,5 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from "@angular/forms";
+import {UserService} from "../../../services/user.service";
+import {User} from "../../../models/user";
 
 @Component({
   selector: 'app-login-form',
@@ -7,13 +9,28 @@ import {NgForm} from "@angular/forms";
   styleUrls: ['./login-form.component.css']
 })
 export class LoginFormComponent implements OnInit {
-@ViewChild('loginForm') loginForm?: NgForm
-  constructor() { }
+  @ViewChild('loginForm') loginForm?: NgForm
+  users !: any[];
+
+  constructor(private userService: UserService) {
+  }
 
   ngOnInit(): void {
+    this.getUsers()
   }
 
   onLogin(form: NgForm) {
-    console.log(this.loginForm)
+    let userTemp = this.loginForm?.value
+    this.users.forEach(u => {
+      if (u.username === userTemp.username && u.password === userTemp.password) {
+        console.log('ho trovato', u.name + ' ' + u.surname)
+        sessionStorage.setItem("User",u)
+      }
+    })
+  }
+
+  getUsers(): void {
+    this.userService.getUsers()
+      .subscribe(users => this.users = users);
   }
 }

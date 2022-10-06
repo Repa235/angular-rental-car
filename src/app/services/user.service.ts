@@ -3,7 +3,9 @@ import {Injectable} from '@angular/core';
 import {Observable, of} from "rxjs";
 import {User} from "../models/user";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import { catchError, map, tap } from 'rxjs/operators';
+import {catchError, map, tap} from 'rxjs/operators';
+import {forEach} from "lodash";
+
 @Injectable({
   providedIn: 'root'
 })
@@ -11,7 +13,7 @@ export class UserService {
 
   usersURL = 'api/users'
 
-  constructor( private http: HttpClient) {
+  constructor(private http: HttpClient) {
   }
 
   private log(message: string) {
@@ -19,8 +21,9 @@ export class UserService {
   }
 
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({'Content-Type': 'application/json'})
   };
+
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
@@ -44,6 +47,7 @@ export class UserService {
       );
   }
 
+
   /** GET user by id. Will 404 if id not found */
   getUser(id: number): Observable<User> {
     const url = `${this.usersURL}/${id}`;
@@ -52,6 +56,9 @@ export class UserService {
       catchError(this.handleError<User>(`getuser id=${id}`))
     );
   }
+
+
+
 
   /** PUT: update the user on the server */
   updateUser(user: User): Observable<any> {
