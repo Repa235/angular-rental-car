@@ -24,6 +24,7 @@ import { VehicleFormComponent } from './components/forms/vehicle-form/vehicle-fo
 import { RentFormComponent } from './components/forms/rent-form/rent-form.component';
 import { ListViewComponent } from './views/list-view/list-view.component';
 import { LoginFormComponent } from './components/forms/login-form/login-form.component';
+import {FormsModule} from "@angular/forms";
 
 
 
@@ -54,7 +55,8 @@ import { LoginFormComponent } from './components/forms/login-form/login-form.com
       {path: '', redirectTo: '/homepage', pathMatch: 'full'},
     ]),
     HttpClientModule,
-    HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService)
+    HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService),
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

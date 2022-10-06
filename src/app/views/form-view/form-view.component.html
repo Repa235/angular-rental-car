@@ -20,13 +20,13 @@
 
 <div *ngIf="formType==='l'" class="container my-5">
   <h2 style="margin-bottom: 2%" >Login</h2>
-  <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+  <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 w-auto align-items-center rounded-3 border shadow-lg">
     <app-login-form></app-login-form>
   </div>
 </div>
 
-<div *ngIf="formType!=='r' && formType!=='v' && formType!=='u' && formType==='l' " class="container my-5">
-  <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+<div *ngIf="formType!=='r' && formType!=='v' && formType!=='u' && formType!=='l' " class="container my-5">
+  <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg" >
     <h2 style="margin-bottom: 3%" >Operazione non riconosciuta</h2>
   </div>
 </div>
