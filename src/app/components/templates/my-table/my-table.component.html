@@ -7,7 +7,7 @@
   <span class="input-group-text">Text to search:</span>
   <input type="text" class="form-control" (keyup)="searchText($event.target, column.value)">
   <ng-container *ngFor="let action of tableConfig.actions">
-    <app-my-button *ngIf="action.buttonTop===true" (click)="clickButton({text:action.text},null)"
+    <app-my-button *ngIf="action.buttonTop===true" (click)="clickButton(action,null)"
                    [buttonConfig]=
                      "{customCssClass:action.customClass,text:action.text, icon:action.icon}">
     </app-my-button>
@@ -37,7 +37,7 @@
         <th scope="row" *ngIf="action.buttonTop===false" >
           <app-my-button [buttonConfig]=
                            "{customCssClass:action.customClass,text:action.text, icon:action.icon}"
-                         (click)="clickButton({text:action.text},row)">
+                         (click)="clickButton(action,row)">
           </app-my-button>
         </th>
     </ng-container>

@@ -36,6 +36,6 @@ export class VehicleFormComponent implements OnInit {
     } else {
       this.vehicleService.updateVehicle(vehicleForm).subscribe()
     }
-
   }
+
 }

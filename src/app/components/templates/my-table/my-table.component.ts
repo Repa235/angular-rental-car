@@ -4,6 +4,9 @@ import * as _ from "lodash";
 import {MyTableActionEnum} from "./config/MyTableActionEnum";
 import {MyActions} from "./config/MyActions";
 import {Router} from "@angular/router";
+import {VehicleService} from "../../../services/vehicle.service";
+import {UserService} from "../../../services/user.service";
+import {RentService} from "../../../services/rent.service";
 
 
 @Component({
@@ -26,7 +29,12 @@ export class MyTableComponent implements OnInit {
 
   @Output() outputTab = new EventEmitter();
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private vehicleService: VehicleService,
+    private userService: UserService,
+    private rentService: RentService,
+  ) {
   }
 
   ngOnInit(): void {
@@ -91,17 +99,28 @@ export class MyTableComponent implements OnInit {
   clickButton(action: MyActions, row: any) {
     this.outputTab.emit({action: action, row: row})
     switch (action.text) {
-      case 'Edit vehicle':
-        console.log('Edit vehicle')
+      case 'Edit':
+        console.log('Edit')
+        if (action.typeOfEntity === 'user') {
+
+        } else if (action.typeOfEntity === 'rent') {
+
+        } else {
+
+        }
         break;
-      case 'Delete vehicle':
+      case 'Delete':
         console.log('Delete vehicle')
-        break;
-      case 'Edit user':
-        console.log('Edit user')
-        break;
-      case 'Delete user':
-        console.log('Delete user')
+        if (action.typeOfEntity === 'user') {
+          this.data = this.data.filter(c => c !== row);
+          this.userService.deleteUser(row.id).subscribe();
+        } else if (action.typeOfEntity === 'rent') {
+          this.data = this.data.filter(c => c !== row);
+          this.rentService.deleteRent(row.id).subscribe();
+        } else {
+          this.data = this.data.filter(c => c !== row);
+          this.vehicleService.deleteVehicle(row.id).subscribe();
+        }
         break;
       default:
         console.log('ERROR')

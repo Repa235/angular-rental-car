@@ -74,4 +74,13 @@ export class VehicleService {
       catchError(this.handleError<any>('updateVehicle'))
     );
   }
+
+  /** DELETE: delete the Vehicle from the server */
+  deleteVehicle(id: number): Observable<Vehicle> {
+    const url = `${this.vehicleURL}/${id}`;
+    return this.http.delete<Vehicle>(url, this.httpOptions).pipe(
+      tap(_ => this.log(`deleted Vehicle id=${id}`)),
+      catchError(this.handleError<Vehicle>('deleteVehicle'))
+    );
+  }
 }

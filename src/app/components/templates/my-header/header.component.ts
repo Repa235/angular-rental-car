@@ -13,7 +13,6 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.user = sessionStorage.getItem("User")
 
   }
 

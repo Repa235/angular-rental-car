@@ -9,15 +9,15 @@ import {MyTableConfig} from "../templates/my-table/config/MyTableConfig";
 
 
 //Actions
-let actionButtonsR: MyActions[] = [{text: 'Edit rent', buttonTop: false, customClass: 'btn btn-outline-secondary princButton'},
-  {text: 'Delete rent', buttonTop: false, customClass: 'btn btn-outline-secondary princButton'},
-  {text: 'Add rent', buttonTop: true, customClass: 'btn btn-outline-secondary princButton'}]
-let actionButtonsU: MyActions[] = [{text: 'Edit user', buttonTop: false, customClass: 'btn btn-outline-secondary princButton'},
-  {text: 'Delete user', buttonTop: false, customClass: 'btn btn-outline-secondary princButton'},
-  {text: 'Add user', buttonTop: true, customClass: 'btn btn-outline-secondary princButton'}]
-let actionButtonsV: MyActions[] = [{text: 'Edit vehicle', buttonTop: false, customClass: 'btn btn-outline-secondary princButton'},
-  {text: 'Delete vehicle', buttonTop: false, customClass: 'btn btn-outline-secondary princButton'},
-  {text: 'Add vehicle', buttonTop: true, customClass: 'btn btn-outline-secondary princButton'}]
+let actionButtonsR: MyActions[] = [{text: 'Edit', buttonTop: false, customClass: 'btn btn-outline-secondary princButton', typeOfEntity: 'rent'},
+  {text: 'Delete', buttonTop: false, customClass: 'btn btn-outline-secondary princButton', typeOfEntity: 'rent'},
+  {text: 'Add', buttonTop: true, customClass: 'btn btn-outline-secondary princButton', typeOfEntity: 'rent'}]
+let actionButtonsU: MyActions[] = [{text: 'Edit', buttonTop: false, customClass: 'btn btn-outline-secondary princButton', typeOfEntity: 'user'},
+  {text: 'Delete', buttonTop: false, customClass: 'btn btn-outline-secondary princButton', typeOfEntity: 'user'},
+  {text: 'Add', buttonTop: true, customClass: 'btn btn-outline-secondary princButton', typeOfEntity: 'user'}]
+let actionButtonsV: MyActions[] = [{text: 'Edit', buttonTop: false, customClass: 'btn btn-outline-secondary princButton', typeOfEntity: 'vehicle'},
+  {text: 'Delete', buttonTop: false, customClass: 'btn btn-outline-secondary princButton', typeOfEntity: 'vehicle'},
+  {text: 'Add', buttonTop: true, customClass: 'btn btn-outline-secondary princButton', typeOfEntity: 'vehicle'}]
 let order: MyOrder = {defaultColumn: "id", orderType: "asc"}
 //Searchs
 let searchR: MySearch = {columns: ["vehicleId", "userId", "id"]};

@@ -3,4 +3,5 @@ export class MyActions{
   text!: string
   customClass?: string
   buttonTop?: boolean
+  typeOfEntity!:string;
 }
