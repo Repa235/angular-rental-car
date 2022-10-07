@@ -57,16 +57,21 @@ export class VehicleService {
     );
   }
 
-  addOrUpdateVehicle(vehicle: Vehicle): Observable<any> {
-    if (vehicle.id) {
-      return this.http.put(this.vehicleURL, vehicle, this.httpOptions).pipe(
-        tap(_ => this.log(`updated vehicle id=${vehicle.id}`)),
-        catchError(this.handleError<any>('updateV')));
-    } else {
-      return this.http.post<User>(this.vehicleURL, vehicle, this.httpOptions).pipe(
-        tap((newVehicle: User) => this.log(`added vehicle w/ id=${newVehicle.id}`)),
-        catchError(this.handleError<User>('addV'))
-      );
-    }
+  /** POST: add a new Vehicle to the server */
+  addVehicle(vehicle: Vehicle): Observable<Vehicle> {
+    this.log('Adding vehicle: ' + vehicle.carBrand + '' + vehicle.model)
+    return this.http.post<Vehicle>(this.vehicleURL, vehicle, this.httpOptions).pipe(
+      tap((newVehicle: Vehicle) => this.log(`added Vehicle w/ id=${newVehicle.id}`)),
+      catchError(this.handleError<Vehicle>('addVehicle'))
+    );
+    this.log('Added')
+  }
+
+  /** PUT: update the Vehicle on the server */
+  updateVehicle(vehicle: Vehicle): Observable<any> {
+    return this.http.put(this.vehicleURL, vehicle, this.httpOptions).pipe(
+      tap(_ => this.log(`updated Vehicle id=${vehicle.id}`)),
+      catchError(this.handleError<any>('updateVehicle'))
+    );
   }
 }
