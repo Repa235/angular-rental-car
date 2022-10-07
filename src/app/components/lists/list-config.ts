@@ -9,9 +9,15 @@ import {MyTableConfig} from "../templates/my-table/config/MyTableConfig";
 
 
 //Actions
-let actionButtons: MyActions[] = [{text: 'Edit', buttonTop: false, customClass: 'btn btn-outline-secondary princButton'},
-  {text: 'Delete', buttonTop: false, customClass: 'btn btn-outline-secondary princButton'},
-  {text: 'Add', buttonTop: true, customClass: 'btn btn-outline-secondary princButton'}]
+let actionButtonsR: MyActions[] = [{text: 'Edit rent', buttonTop: false, customClass: 'btn btn-outline-secondary princButton'},
+  {text: 'Delete rent', buttonTop: false, customClass: 'btn btn-outline-secondary princButton'},
+  {text: 'Add rent', buttonTop: true, customClass: 'btn btn-outline-secondary princButton'}]
+let actionButtonsU: MyActions[] = [{text: 'Edit user', buttonTop: false, customClass: 'btn btn-outline-secondary princButton'},
+  {text: 'Delete user', buttonTop: false, customClass: 'btn btn-outline-secondary princButton'},
+  {text: 'Add user', buttonTop: true, customClass: 'btn btn-outline-secondary princButton'}]
+let actionButtonsV: MyActions[] = [{text: 'Edit vehicle', buttonTop: false, customClass: 'btn btn-outline-secondary princButton'},
+  {text: 'Delete vehicle', buttonTop: false, customClass: 'btn btn-outline-secondary princButton'},
+  {text: 'Add vehicle', buttonTop: true, customClass: 'btn btn-outline-secondary princButton'}]
 let order: MyOrder = {defaultColumn: "id", orderType: "asc"}
 //Searchs
 let searchR: MySearch = {columns: ["vehicleId", "userId", "id"]};
@@ -36,15 +42,15 @@ let headerV: MyHeaders[] = [{key: "id", label: "Id"}, {key: "carBrand", label: "
 //Configs
 export const configurazioneR: MyTableConfig = {
   headers: headerR, order: order, search: searchR, pagination: pagination,
-  actions: actionButtons
+  actions: actionButtonsR
 }
 export const configurazioneU: MyTableConfig = {
   headers: headerU, order: order, search: searchU, pagination: pagination,
-  actions: actionButtons
+  actions: actionButtonsU
 }
 
 export const configurazioneV: MyTableConfig = {
   headers: headerV, order: order, search: searchV, pagination: pagination,
-  actions: actionButtons
+  actions: actionButtonsV
 }
 

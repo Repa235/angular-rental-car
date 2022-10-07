@@ -11,10 +11,8 @@ export class InMemoryDataService implements InMemoryDbService {
     const users = [
       { id:2,  username: 'a', name: 'Oscar', surname: 'Paro', password: 'a', birthday: '', role: 'customer' },
       { id:3,  username: 'b', name: 'Ugo', surname: 'Losone', password: 'b', birthday: '', role: 'customer' },
-      { id:4,  username: 'c', name: 'Rita', surname: 'Ardata', password: 'c', birthday: '', role: 'customer' },
       { id:5,  username: 's', name: 'Harry', surname: 'Tardato', password: 's', birthday: '', role: 'superuser' },
-      { id:6,  username: 'd', name: 'Lina', surname: 'Maya', password: 'd', birthday: '', role: 'customer' },
-      { id:7,  username: 'e', name: 'Luca', surname: 'Pezzolo', password: 'e', birthday: '', role: 'customer' },
+      { id:7,  username: 'e', name: 'Luca', surname: 'Stello', password: 'e', birthday: '', role: 'customer' },
     ];
 
     const rents = [
@@ -23,7 +21,8 @@ export class InMemoryDataService implements InMemoryDbService {
     ];
 
     const vehicles = [
-      {id:1, carBrand:'Pegassi', model:'Zentorno', registrationYear:1999,type:'Supercar', rents:undefined }
+      {id:1, carBrand:'Pegassi', model:'Zentorno', registrationYear:1999,type:'Supercar', rents:undefined },
+      {id:2, carBrand:'Mitsubishi', model:'Tutto', registrationYear:1999,type:'Supercar', rents:undefined }
     ]
     return { users, rents, vehicles };
 

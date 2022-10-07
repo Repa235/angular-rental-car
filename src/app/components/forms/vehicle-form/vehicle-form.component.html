@@ -1,15 +1,19 @@
 <form #carForm="ngForm" (ngSubmit)="addOrUpdate(carForm.value)">
   <div class="input-group mb-3">
-    <span class="input-group-text" >Car brand</span>
-    <input type="text" class="form-control" name="carBrand" placeholder="Car brand" ngModel>
+    <span class="input-group-text">Car brand</span>
+    <input type="text" class="form-control" name="carBrand" placeholder="Car brand"
+           [value]="oldCar.carBrand" ngModel>
     <span class="input-group-text">Model</span>
-    <input type="text" class="form-control" name="model" placeholder="Model" ngModel>
+    <input type="text" class="form-control" name="model" placeholder="Model"
+           [value]="oldCar.model" ngModel>
   </div>
   <div class="input-group mb-3">
     <span class="input-group-text">Registration year</span>
-    <input type="text" class="form-control" name="registrationYear" placeholder="Registration year" ngModel>
+    <input type="text" class="form-control" name="registrationYear" placeholder="Registration year"
+           [value]="oldCar.registrationYear" ngModel>
     <span class="input-group-text">Type</span>
-    <input type="text" class="form-control" name="type" placeholder="Type" ngModel>
+    <input type="text" class="form-control" name="type" placeholder="Type"
+           [value]="oldCar.type" ngModel>
   </div>
   <button type="submit" class="btn btn-outline-primary">Primary</button>
 </form>

@@ -11,8 +11,8 @@ import {result} from "lodash";
   styleUrls: ['./vehicle-form.component.css']
 })
 export class VehicleFormComponent implements OnInit {
-  oldCarId?: any;
-  oldCar?:any;
+  oldCarId: any = 0;
+  oldCar:any = {};
 
   constructor(
     private vehicleService: VehicleService,
@@ -21,10 +21,11 @@ export class VehicleFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe(params => {
-      this.oldCarId = params['idV'];
-      this.vehicleService.getVehicle(this.oldCarId).subscribe((result) => this.oldCar = result)
-      console.log('model: ' + this.oldCar?.model)
-    })
+      this.oldCarId = params['idV']; })
+
+      this.vehicleService.getVehicle(this.oldCarId).subscribe((result) => {
+        this.oldCar = result
+      })
   }
 
   addOrUpdate(value: any) {

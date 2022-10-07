@@ -3,6 +3,7 @@ import {MyTableConfig} from "./config/MyTableConfig";
 import * as _ from "lodash";
 import {MyTableActionEnum} from "./config/MyTableActionEnum";
 import {MyActions} from "./config/MyActions";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -23,9 +24,9 @@ export class MyTableComponent implements OnInit {
   arrayPages!: number[];
   action = MyTableActionEnum;
 
-  @Output() outputTab = new EventEmitter<any>();
+  @Output() outputTab = new EventEmitter();
 
-  constructor() {
+  constructor(private router: Router) {
   }
 
   ngOnInit(): void {
@@ -89,6 +90,23 @@ export class MyTableComponent implements OnInit {
 
   clickButton(action: MyActions, row: any) {
     this.outputTab.emit({action: action, row: row})
+    switch (action.text) {
+      case 'Edit vehicle':
+        console.log('Edit vehicle')
+        break;
+      case 'Delete vehicle':
+        console.log('Delete vehicle')
+        break;
+      case 'Edit user':
+        console.log('Edit user')
+        break;
+      case 'Delete user':
+        console.log('Delete user')
+        break;
+      default:
+        console.log('ERROR')
+        break;
+    }
   }
 
 

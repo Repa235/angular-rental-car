@@ -52,7 +52,7 @@ export class VehicleService {
     const url = `${this.vehicleURL}/${id}`;
     return this.http.get<Vehicle>(url)
       .pipe(
-      tap(_ => this.log(`fetched vehicle id=${id}, ${ this.http.get<Vehicle>(url)}`)),
+      tap(_ => this.log(`fetched vehicle id=${id}`)),
       catchError(this.handleError<Vehicle>(` id=${id}`))
     );
   }
@@ -60,7 +60,7 @@ export class VehicleService {
   addOrUpdateVehicle(vehicle: Vehicle): Observable<any> {
     if (vehicle.id) {
       return this.http.put(this.vehicleURL, vehicle, this.httpOptions).pipe(
-        tap(_ => this.log(`updated user id=${vehicle.id}`)),
+        tap(_ => this.log(`updated vehicle id=${vehicle.id}`)),
         catchError(this.handleError<any>('updateV')));
     } else {
       return this.http.post<User>(this.vehicleURL, vehicle, this.httpOptions).pipe(
