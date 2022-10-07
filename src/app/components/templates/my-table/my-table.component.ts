@@ -98,34 +98,6 @@ export class MyTableComponent implements OnInit {
 
   clickButton(action: MyActions, row: any) {
     this.outputTab.emit({action: action, row: row})
-    switch (action.text) {
-      case 'Edit':
-        console.log('Edit')
-        if (action.typeOfEntity === 'user') {
-
-        } else if (action.typeOfEntity === 'rent') {
-
-        } else {
-
-        }
-        break;
-      case 'Delete':
-        console.log('Delete vehicle')
-        if (action.typeOfEntity === 'user') {
-          this.data = this.data.filter(c => c !== row);
-          this.userService.deleteUser(row.id).subscribe();
-        } else if (action.typeOfEntity === 'rent') {
-          this.data = this.data.filter(c => c !== row);
-          this.rentService.deleteRent(row.id).subscribe();
-        } else {
-          this.data = this.data.filter(c => c !== row);
-          this.vehicleService.deleteVehicle(row.id).subscribe();
-        }
-        break;
-      default:
-        console.log('ERROR')
-        break;
-    }
   }
 
 

@@ -5,6 +5,7 @@ import {RentService} from "../../services/rent.service";
 import {UserService} from "../../services/user.service";
 import {VehicleService} from "../../services/vehicle.service";
 import {configurazioneR, configurazioneU, configurazioneV} from "../../components/lists/list-config";
+import {MyActions} from "../../components/templates/my-table/config/MyActions";
 
 @Component({
   selector: 'app-list-view',
@@ -56,6 +57,22 @@ export class ListViewComponent implements OnInit {
   getVehicles(): void {
     this.vehicleService.getVehicles()
       .subscribe(vehicles => this.vehicles = vehicles)
+  }
+
+  getAction(action: MyActions, row: any){
+    switch (action.text) {
+      case "Add":
+        console.log('Add ' + action.typeOfEntity + ' ' + row.id)
+        break;
+
+      case "Edit":
+        console.log('Edit '+ action.typeOfEntity + ' ' + row.id)
+        break;
+
+      case "Delete":
+        console.log('Delete '+ action.typeOfEntity + ' ' + row.id)
+
+    }
   }
 
 }
