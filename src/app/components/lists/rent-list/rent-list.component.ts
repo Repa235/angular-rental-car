@@ -7,6 +7,8 @@ import {MySearch} from "../../templates/my-table/config/MySearch";
 import {MyPagination} from "../../templates/my-table/config/MyPagination";
 import {MyHeaders} from "../../templates/my-table/config/MyHeaders";
 import {forEach} from "lodash";
+import {Router} from "@angular/router";
+import {Rent} from "../../../models/rent";
 
 @Component({
   selector: 'app-rent-list',
@@ -15,7 +17,7 @@ import {forEach} from "lodash";
 })
 export class RentListComponent implements OnInit {
 
-  rents!: any[];
+  rents: any[] = [];
   tableconfig!: MyTableConfig;
   actionButtons!: MyActions[];
   order!: MyOrder;
@@ -24,27 +26,8 @@ export class RentListComponent implements OnInit {
   header!: MyHeaders[];
 
 
-  constructor(private rentService: RentService) {
 
-    this.actionButtons = [
-      {text: 'Edit', buttonTop: false, customClass: 'btn btn-outline-secondary princButton', typeOfEntity: 'vehicle'},
-      {text: 'Delete', buttonTop: false, customClass: 'btn btn-outline-secondary princButton', typeOfEntity: 'vehicle'},
-      {text: 'Add', buttonTop: true, customClass: 'btn btn-outline-secondary princButton', typeOfEntity: 'vehicle'}
-    ]
-    this.order = {defaultColumn: "id", orderType: "asc"}
-    this.search = {columns: ["carBrand", "model", "type"]};
-    this.pagination = {itemPerPage: 3, itemPerPageOptions: [3, 6, 9]};
-    this.header = [{key: "id", label: "Id"}, {key: "carBrand", label: "Car brand"}, {
-      key: "model",
-      label: "Model"
-    },
-      {key: "registrationYear", label: "Year of registration"}, {key: "type", label: "Type"}];
-
-    this.tableconfig = {
-      headers: this.header, order: this.order, search: this.search, pagination: this.pagination,
-      actions: this.actionButtons
-    }
-
+  constructor(private rentService: RentService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -53,6 +36,7 @@ export class RentListComponent implements OnInit {
     this.actionButtons = [
       {text: 'Edit', buttonTop: false, customClass: 'btn btn-outline-secondary princButton', typeOfEntity: 'rent'},
       {text: 'Delete', buttonTop: false, customClass: 'btn btn-outline-secondary princButton', typeOfEntity: 'rent'},
+      {text: 'Approve', buttonTop: false, customClass: 'btn btn-outline-secondary princButton', typeOfEntity: 'rent'},
       {text: 'Add', buttonTop: true, customClass: 'btn btn-outline-secondary princButton', typeOfEntity: 'rent'}]
 
     this.order = {defaultColumn: "id", orderType: "asc"}
@@ -69,7 +53,7 @@ export class RentListComponent implements OnInit {
 
     this.tableconfig = {
       headers: this.header, order: this.order, search: this.search, pagination: this.pagination,
-        actions: this.actionButtons
+      actions: this.actionButtons
     }
   }
 
@@ -83,14 +67,20 @@ export class RentListComponent implements OnInit {
     switch (action.text) {
       case "Add":
         console.log('Add ' + action.typeOfEntity + ' ' + row.id)
+        this.router.navigate(['form/rent'])
         break;
 
       case "Edit":
         console.log('Edit ' + action.typeOfEntity + ' ' + row.id)
+        this.router.navigate(['form/rent', row.id])
         break;
 
       case "Delete":
         console.log('Delete ' + action.typeOfEntity + ' ' + row.id)
+        this.rents = this.rents.filter(rent => rent !== row);
+        this.rentService.deleteRent(row.id).subscribe();
+        break;
+
 
     }
   }

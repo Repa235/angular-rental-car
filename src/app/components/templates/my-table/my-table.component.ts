@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {MyTableConfig} from "./config/MyTableConfig";
 import * as _ from "lodash";
 import {MyTableActionEnum} from "./config/MyTableActionEnum";
@@ -14,7 +14,7 @@ import {RentService} from "../../../services/rent.service";
   templateUrl: './my-table.component.html',
   styleUrls: ['./my-table.component.css']
 })
-export class MyTableComponent implements OnInit {
+export class MyTableComponent implements OnInit, OnChanges {
   @Input() tableConfig !: MyTableConfig;
   @Input() data !: any [];
 
@@ -29,22 +29,29 @@ export class MyTableComponent implements OnInit {
 
   @Output() outputTab = new EventEmitter();
 
-  constructor(
-    private router: Router,
-    private vehicleService: VehicleService,
-    private userService: UserService,
-    private rentService: RentService,
-  ) {
+  constructor() {
+  }
+
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes)
+    if(changes && changes['data']) {
+      this.initData()
+    }
   }
 
   ngOnInit(): void {
+    this.initData()
+  }
 
+  initData() {
     this.key = this.tableConfig.order.defaultColumn;
     this.dataBackup = this.data;
     this.numberItem4Page = this.tableConfig.pagination.itemPerPage;
     this.maxPage = Number((this.data.length / this.numberItem4Page).toFixed())
     this.arrayPages = Array.from({length: this.maxPage}, (_, i) => i + 1)
   }
+
 
   changeItemPerPage(numberItem4Page: any) {
     this.numPageSelected = 1

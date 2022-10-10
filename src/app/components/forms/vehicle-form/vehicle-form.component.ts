@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {NgForm} from "@angular/forms";
 import {Vehicle} from "../../../models/vehicle";
 import {VehicleService} from "../../../services/vehicle.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {result} from "lodash";
 
 @Component({
@@ -11,30 +11,29 @@ import {result} from "lodash";
   styleUrls: ['./vehicle-form.component.css']
 })
 export class VehicleFormComponent implements OnInit {
-  oldCarId: any | undefined;
+  idVehicle?: any
   vehicle: any = {}
 
   constructor(
     private vehicleService: VehicleService,
-    private activatedRoute: ActivatedRoute) {
-  }
+    private route: ActivatedRoute,
+    private router: Router) {}
 
   ngOnInit(): void {
-    this.activatedRoute.queryParams.subscribe(params => {
-      this.oldCarId = (params['idV']) ? params['idV'] : null
-    })
-    if (this.oldCarId !== null) {
-      this.vehicleService.getVehicle(this.oldCarId).subscribe((result) => {
+    const routeParams = this.route.snapshot.paramMap;
+    this.idVehicle = routeParams.get('idVehicle');
+    if (this.idVehicle !== null) {
+      this.vehicleService.getVehicle(this.idVehicle).subscribe((result) => {
         this.vehicle = result
       })
     }
   }
 
   addOrUpdateVehicle(vehicleForm: any): void {
-    if (this.oldCarId === null) {
-      this.vehicleService.addVehicle(vehicleForm).subscribe()
+    if (this.idVehicle === null) {
+      this.vehicleService.addVehicle(vehicleForm).subscribe((() => this.router.navigate(['/list/vehicle'])))
     } else {
-      this.vehicleService.updateVehicle(vehicleForm).subscribe()
+      this.vehicleService.updateVehicle(vehicleForm).subscribe((() => this.router.navigate(['/list/vehicle'])))
     }
   }
 

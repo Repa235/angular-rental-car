@@ -7,6 +7,7 @@ import {MyPagination} from "../../templates/my-table/config/MyPagination";
 import {MyHeaders} from "../../templates/my-table/config/MyHeaders";
 import {VehicleService} from "../../../services/vehicle.service";
 import {logMessages} from "@angular-devkit/build-angular/src/builders/browser-esbuild/esbuild";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-vehicle-list',
@@ -15,7 +16,7 @@ import {logMessages} from "@angular-devkit/build-angular/src/builders/browser-es
 })
 export class VehicleListComponent implements OnInit {
 
-  vehicles!: any[];
+  vehicles: any[] = [];
   tableconfig!: MyTableConfig;
   actionButtons!: MyActions[];
   order!: MyOrder;
@@ -23,7 +24,7 @@ export class VehicleListComponent implements OnInit {
   pagination!: MyPagination;
   header!: MyHeaders[];
 
-  constructor(private vehicleService: VehicleService) {
+  constructor(private vehicleService: VehicleService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -64,14 +65,19 @@ export class VehicleListComponent implements OnInit {
     switch (action.text) {
       case "Add":
         console.log('Add ' + action.typeOfEntity + ' ' + row.id)
+        this.router.navigate(['form/vehicle'])
         break;
 
       case "Edit":
         console.log('Edit ' + action.typeOfEntity + ' ' + row.id)
+        this.router.navigate(['form/vehicle', row.id])
         break;
 
       case "Delete":
         console.log('Delete ' + action.typeOfEntity + ' ' + row.id)
+        this.vehicles = this.vehicles.filter(vehicle => vehicle !== row);
+        this.vehicleService.deleteVehicle(row.id).subscribe();
+
 
     }
   }

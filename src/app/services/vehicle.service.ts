@@ -40,11 +40,12 @@ export class VehicleService {
   }
 
   getVehicles(): Observable<Vehicle[]> {
+    console.log('Inizio la chiamata')
     return this.http.get<Vehicle[]>(this.vehicleURL)
       .pipe(
         tap(_ => this.log('fetched rents')),
         catchError(this.handleError<Vehicle[]>('getVehicle', []))
-      );
+      )
   }
 
   /** GET vehicle by id. Will 404 if id not found */

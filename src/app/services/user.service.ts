@@ -40,6 +40,7 @@ export class UserService {
   }
 
   getUsers(): Observable<User[]> {
+    console.log('Users: ',this.http.get<User[]>(this.usersURL))
     return this.http.get<User[]>(this.usersURL)
       .pipe(
         tap(_ => this.log('fetched users')),
@@ -56,8 +57,6 @@ export class UserService {
       catchError(this.handleError<User>(`getuser id=${id}`))
     );
   }
-
-
 
 
   /** PUT: update the user on the server */

@@ -7,7 +7,7 @@
   <span class="input-group-text">Text to search:</span>
   <input type="text" class="form-control" (keyup)="searchText($event.target, column.value)">
   <ng-container *ngFor="let action of tableConfig.actions">
-    <app-my-button *ngIf="action.buttonTop===true" (click)="clickButton(action,null)"
+    <app-my-button *ngIf="action.buttonTop===true" (click)="clickButton(action,0)"
                    [buttonConfig]=
                      "{customCssClass:action.customClass,text:action.text, icon:action.icon}">
     </app-my-button>

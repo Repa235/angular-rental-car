@@ -57,11 +57,15 @@ import { RentListComponent } from './components/lists/rent-list/rent-list.compon
       {path: 'homepage', component: HomepageComponent},
       {path: 'form/login', component: LoginFormComponent},
       {path: 'form/rent', component: RentFormComponent},
+      {path: 'form/rent/:idRent', component: RentFormComponent},
       {path: 'form/user', component: UserFormComponent},
+      {path: 'form/user/:idUser', component: UserFormComponent},
       {path: 'form/vehicle', component: VehicleFormComponent},
+      {path: 'form/vehicle/:idVehicle', component: VehicleFormComponent},
       {path: 'list/user', component: UserListComponent},
       {path: 'list/vehicle', component: VehicleListComponent},
       {path: 'list/rent', component: RentListComponent},
+      {path: 'login', component: LoginFormComponent},
 
 
       {path: '', redirectTo: '/homepage', pathMatch: 'full'},

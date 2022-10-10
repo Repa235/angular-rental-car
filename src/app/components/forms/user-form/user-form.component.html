@@ -1,22 +1,28 @@
 <div class="container my-5 mx-auto">
   <h2 style="margin-bottom: 2%">User form</h2>
   <div class="row p-4 pb-0 pe-lg-0 pt-lg-5  align-items-center rounded-3 border shadow-lg">
-    <div class="input-group mb-3">
-      <span class="input-group-text">Name</span>
-      <input type="text" class="form-control" name="name" placeholder="Name">
-      <span class="input-group-text">Surname</span>
-      <input type="text" class="form-control" name="surname" placeholder="Surname">
-    </div>
-    <div class="input-group mb-3">
-      <span class="input-group-text">Birthday</span>
-      <input type="date" class="form-control" name="birthday" placeholder="">
-    </div>
-    <div class="input-group mb-3">
-      <span class="input-group-text">Username</span>
-      <input type="text" class="form-control" name="username" placeholder="Username">
-      <span class="input-group-text">Password</span>
-      <input type="password" class="form-control" name="password" placeholder="Password">
-    </div>
+    <form #userForm="ngForm" (ngSubmit)="addOrUpdateUser(userForm.value)">
+      <div class="input-group mb-3">
+        <span class="input-group-text">Name</span>
+        <input type="text" class="form-control" name="name" placeholder="Name" [(ngModel)]="user.name">
+        <span class="input-group-text">Surname</span>
+        <input type="text" class="form-control" name="surname" placeholder="Surname" [(ngModel)]="user.surname">
+      </div>
+      <div class="input-group mb-3">
+        <span class="input-group-text">Birthday</span>
+        <input type="date" class="form-control" name="birthday" placeholder="" [(ngModel)]="user.birthday">
+      </div>
+      <div class="input-group mb-3">
+        <span class="input-group-text">Username</span>
+        <input type="text" class="form-control" name="username" placeholder="Username" [(ngModel)]="user.username">
+        <span class="input-group-text">Password</span>
+        <input type="password" class="form-control" name="password" placeholder="Password" [(ngModel)]="user.password">
+      </div>
+      <input type="hidden" [(ngModel)]="user.id" name="id" [value]="user.id">
+      <button type="submit" class="btn btn-outline-primary">Submit</button>
+    </form>
   </div>
+</div>
+
 
 

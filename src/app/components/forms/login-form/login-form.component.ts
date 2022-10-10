@@ -24,7 +24,7 @@ export class LoginFormComponent implements OnInit {
     this.users.forEach(u => {
       if (u.username === userTemp.username && u.password === userTemp.password) {
         console.log('ho trovato', u.name + ' ' + u.surname)
-        sessionStorage.setItem("User",u)
+
       }
     })
   }
