@@ -1,4 +1,5 @@
 import {Rent} from "./rent";
+import * as moment from "moment";
 
 export interface User {
   id: number;
@@ -6,7 +7,7 @@ export interface User {
   name: string;
   surname: string;
   password: string;
-  birthday: string;
+  birthday: moment.Moment;
   role: string;
   rents?: Rent[];
 }

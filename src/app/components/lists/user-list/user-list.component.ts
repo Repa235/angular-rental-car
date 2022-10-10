@@ -27,7 +27,6 @@ export class UserListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUsers();
-
     this.order = {defaultColumn: "id", orderType: "asc"}
     this.actionButtons = [
       {text: 'Edit', buttonTop: false, customClass: 'btn btn-outline-secondary princButton', typeOfEntity: 'user'},
@@ -44,11 +43,14 @@ export class UserListComponent implements OnInit {
 
     this.tableconfig = { headers: this.header, search: this.search, order: this.order, pagination:
       this.pagination, actions: this.actionButtons }
+
+
   }
 
   getUsers(): void {
     this.userService.getUsers()
       .subscribe(users => this.users = users);
+    this.users.forEach(e => console.log(e))
   }
 
   getAction(action: MyActions, row: any) {

@@ -6,6 +6,7 @@ import {MySearch} from "../../templates/my-table/config/MySearch";
 import {MyPagination} from "../../templates/my-table/config/MyPagination";
 import {MyHeaders} from "../../templates/my-table/config/MyHeaders";
 import {VehicleService} from "../../../services/vehicle.service";
+import {logMessages} from "@angular-devkit/build-angular/src/builders/browser-esbuild/esbuild";
 
 @Component({
   selector: 'app-vehicle-list',
@@ -27,6 +28,7 @@ export class VehicleListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getVehicles()
+
 
     this.actionButtons = [{
       text: 'Edit',
@@ -55,6 +57,7 @@ export class VehicleListComponent implements OnInit {
   getVehicles(): void {
     this.vehicleService.getVehicles()
       .subscribe(vehicles => this.vehicles = vehicles)
+
   }
 
   getAction(action: MyActions, row: any) {

@@ -6,6 +6,7 @@ import {MyOrder} from "../../templates/my-table/config/MyOrder";
 import {MySearch} from "../../templates/my-table/config/MySearch";
 import {MyPagination} from "../../templates/my-table/config/MyPagination";
 import {MyHeaders} from "../../templates/my-table/config/MyHeaders";
+import {forEach} from "lodash";
 
 @Component({
   selector: 'app-rent-list',
@@ -75,6 +76,7 @@ export class RentListComponent implements OnInit {
   getRents(): void {
     this.rentService.getRents()
       .subscribe(rents => this.rents = rents)
+    this.rents.forEach(e => console.log(e))
   }
 
   getAction(action: MyActions, row: any) {
