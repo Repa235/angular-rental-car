@@ -1,12 +1,17 @@
-<div class="input-group mb-3">
-  <span class="input-group-text" id="basic-addon1">Start date:</span>
-  <input type="date" class="form-control" name="startDate" placeholder="">
-
-  <input type="date" class="form-control" name="endDate" placeholder="">
-</div>
-<div class="input-group mb-3" > <!-- *ngIf="rent.startDate&&rent.endDate" -->
-  <span class="input-group-text" id="basic-addon2">Veicolo</span>
-  <select class="form-select">
-    <option *ngFor="let v of vehicleList">{{v.carBrand + " " + v.model}}</option>
-  </select>
+<div class="container my-5 mx-auto">
+  <h2 style="margin-bottom: 2%">Rent form</h2>
+  <div class="row p-4 pb-0 pe-lg-0 pt-lg-5  align-items-center rounded-3 border shadow-lg">
+    <!-- form ... -->
+    <div class="input-group mb-3">
+      <span class="input-group-text">Start date:</span>
+      <input type="date" class="form-control" name="startDate" placeholder="">
+      <input type="date" class="form-control" name="endDate" placeholder="">
+    </div>
+    <div class="input-group mb-3"> <!-- *ngIf="rent.startDate&&rent.endDate" -->
+      <span class="input-group-text">Veicolo</span>
+      <select class="form-select">
+        <option *ngFor="let v of vehicleList">{{v.carBrand + " " + v.model}}</option>
+      </select>
+    </div>
+  </div>
 </div>

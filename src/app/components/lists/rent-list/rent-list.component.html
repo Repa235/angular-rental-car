@@ -1,0 +1,7 @@
+<div class="container my-5">
+  <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+    <h2>Rents list</h2>
+    <app-my-table [tableConfig]="tableconfig" [data]="rents"
+                  (outputTab)="getAction($event.action, $event.row)"></app-my-table>
+  </div>
+</div>
