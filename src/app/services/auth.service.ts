@@ -2,7 +2,9 @@ import {Injectable} from '@angular/core';
 import {User} from "../models/user";
 import {HttpClient} from "@angular/common/http";
 import * as moment from "moment";
-import {map, tap} from "lodash";
+import {map} from "rxjs/operators";
+import {InMemoryDataService} from "./in-memory-data.service";
+
 
 @Injectable({
   providedIn: 'root'
@@ -11,36 +13,34 @@ export class AuthService {
 
   authURL = 'api/auth'
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private inMemo: InMemoryDataService) {
   }
 
   login(username: string, password: string) {
-    return this.http.post<string>(this.authURL, {username, password})
-      .subscribe(token => {this.setSession(token)})
+    //return this.http.post<any>(this.authURL, {username, password})
+    this.setSession(this.inMemo.generaToken())
+    console.log('Token salvato')
+    return {username: username, password:password, token: this.inMemo.generaToken()};
+
   }
 
   private setSession(token: any) {
-    const expiresAt = moment().add(token.expiresIn, 'second');
-    localStorage.setItem('id_token', token.idToken);
-    localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()));
+    sessionStorage.setItem('token', token);
   }
 
-  logout() {
-    localStorage.removeItem("id_token");
-    localStorage.removeItem("expires_at");
+  removeToken(){
+    console.log('Token rimosso')
+    sessionStorage.removeItem('token')
   }
 
-  public isLoggedIn() {
-    return moment().isBefore(this.getExpiration());
-  }
+  getAuthToken = (): string => {
+    let token: string = "";
+    var tokenAuth = sessionStorage.getItem("token")
 
-  isLoggedOut() {
-    return !this.isLoggedIn();
-  }
-
-  getExpiration() {
-    const expiration = localStorage.getItem("expires_at")
-    return moment(expiration);
+    if (tokenAuth != null) {
+      token = tokenAuth;
+    }
+    return token;
   }
 
 

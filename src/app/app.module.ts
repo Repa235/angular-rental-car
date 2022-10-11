@@ -28,6 +28,7 @@ import {FormsModule} from "@angular/forms";
 import { UserListComponent } from './components/lists/user-list/user-list.component';
 import { VehicleListComponent } from './components/lists/vehicle-list/vehicle-list.component';
 import { RentListComponent } from './components/lists/rent-list/rent-list.component';
+import {AuthInterceptor} from "../interceptors/auth.interceptors";
 
 
 
@@ -74,7 +75,7 @@ import { RentListComponent } from './components/lists/rent-list/rent-list.compon
     HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService),
     FormsModule
   ],
-  providers: [],
+  providers: [AuthInterceptor],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -24,11 +24,18 @@ export class InMemoryDataService implements InMemoryDbService {
       {id:1, carBrand:'Pegassi', model:'Zentorno', registrationYear:1999,type:'Supercar', rents:undefined },
       {id:2, carBrand:'Mitsubishi', model:'Tutto', registrationYear:1999,type:'Supercar', rents:undefined }
     ]
-    return { users, rents, vehicles };
+
+
+
+    return { users, rents, vehicles};
 
 
   }
 
+
+  generaToken(){
+    return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Ik9zY2FyIFBhcm8iLCJpYXQiOjE1MTYyMzkwMjJ9.-b7t5gGlmRaYBJu6tjHOcPSGgPGig2jg8E6FAg49dL8"
+  }
 
 
 }
