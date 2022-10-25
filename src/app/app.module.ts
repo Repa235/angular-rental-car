@@ -8,9 +8,9 @@ import { MyFooterComponent } from './components/templates/my-footer/my-footer.co
 
 
 import { RouterModule } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryDataService} from "./services/in-memory-data.service";
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+//import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+//import { InMemoryDataService} from "./services/in-memory-data.service";
 
 import {MyTableComponent} from "./components/templates/my-table/my-table.component";
 import {MyButtonComponent} from "./components/templates/my-button/my-button.component";
@@ -72,10 +72,10 @@ import {AuthInterceptor} from "../interceptors/auth.interceptors";
       {path: '', redirectTo: '/homepage', pathMatch: 'full'},
     ]),
     HttpClientModule,
-    HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService),
+    //HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService),
     FormsModule
   ],
-  providers: [AuthInterceptor],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

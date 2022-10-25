@@ -1,27 +1,31 @@
-import { HTTP_INTERCEPTORS, HttpEvent } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpEvent} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpInterceptor, HttpHandler, HttpRequest} from '@angular/common/http';
 
 
-import { Observable } from 'rxjs';
+import {Observable} from 'rxjs';
 import {AuthService} from "../app/services/auth.service";
 
 const TOKEN_HEADER_KEY = 'Authorization';       // for Spring Boot back-end
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private authService: AuthService) { }
+
+
+  constructor(private authService: AuthService) {
+  }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    let authReq = req;
-    const token = this.authService.getAuthToken()
-    if (token != null) {
-      authReq = req.clone({ headers: req.headers.set(TOKEN_HEADER_KEY, 'Bearer ' + token) });
+
+    let authToken = this.authService.getToken();
+    let authHeader = (authToken&&authToken!="") ? authToken : "";
+    if (this.authService.isLogged()) {
+      req = req.clone({setHeaders: {Authorization: authHeader}});
     }
-    return next.handle(authReq);
+    return next.handle(req);
   }
 }
 
 export const authInterceptorProviders = [
-  { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
 ];

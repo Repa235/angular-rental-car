@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
-import {User} from "../models/user";
-import {HttpClient} from "@angular/common/http";
-import * as moment from "moment";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {environment} from "../../environments/environment";
+import {Token} from "../models/token";
+import {Observable, of} from "rxjs";
 import {map} from "rxjs/operators";
-import {InMemoryDataService} from "./in-memory-data.service";
 
 
 @Injectable({
@@ -11,36 +11,61 @@ import {InMemoryDataService} from "./in-memory-data.service";
 })
 export class AuthService {
 
-  authURL = 'api/auth'
 
-  constructor(private http: HttpClient, private inMemo: InMemoryDataService) {
+  authURL: string = environment.authServerURI;
+
+
+  httpOptions = {
+    headers: new HttpHeaders({'Content-Type': 'application/json'})
+  };
+
+  constructor(private http: HttpClient) {
+  }
+
+  private log(message: string) {
+    console.log(`auth service: ${message}`);
+  }
+
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+
+      // TODO: send the error to remote logging infrastructure
+      console.error(error); // log to console instead
+
+      // TODO: better job of transforming error for rent consumption
+      this.log(`${operation} failed: ${error.message}`);
+
+      // Let the app keep running by returning an empty result.
+      return of(result as T);
+    };
   }
 
   login(username: string, password: string) {
-    //return this.http.post<any>(this.authURL, {username, password})
-    this.setSession(this.inMemo.generaToken())
-    console.log('Token salvato')
-    return {username: username, password:password, token: this.inMemo.generaToken()};
-
+    return this.http.post<Token>(this.authURL, {username: username, password: password}, this.httpOptions).pipe(
+      map(data => {
+        sessionStorage.setItem("token", "Bearer " + data.token);
+        sessionStorage.setItem("isLogged", "true")
+      })
+    )
   }
 
-  private setSession(token: any) {
-    sessionStorage.setItem('token', token);
-  }
-
-  removeToken(){
-    console.log('Token rimosso')
-    sessionStorage.removeItem('token')
-  }
-
-  getAuthToken = (): string => {
-    let token: string = "";
-    var tokenAuth = sessionStorage.getItem("token")
-
-    if (tokenAuth != null) {
-      token = tokenAuth;
+  isLogged(): boolean {
+    let isLogged = sessionStorage.getItem("isLogged")
+    if (isLogged === "true") {
+      return true;
     }
-    return token;
+    return false;
+  }
+
+  removeToken() {
+    console.log('Token removed')
+    sessionStorage.removeItem('token')
+    sessionStorage.removeItem("isLogged")
+  }
+
+  getToken = (): string => {
+    var tokenAuth = sessionStorage.getItem("token")
+    return (tokenAuth) ? tokenAuth : "";
   }
 
 

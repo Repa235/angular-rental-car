@@ -11,8 +11,10 @@ import {AuthService} from "../../../services/auth.service";
   styleUrls: ['./login-form.component.css']
 })
 export class LoginFormComponent implements OnInit {
-  @ViewChild('loginForm') loginForm?: NgForm
-  users !: any[];
+  username!: string;
+  password!: string;
+
+
 
   constructor(
     private userService: UserService,
@@ -21,18 +23,13 @@ export class LoginFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getUsers()
+
   }
 
-  onLogin(form: NgForm) {
-    let userTemp = this.loginForm?.value
-    /*this.users.forEach(u => {
-      if (u.username === userTemp.username && u.password === userTemp.password) {
-        console.log('ho trovato', u.name + ' ' + u.surname)
-
-      }
-    })*/
-    console.log(this.authService.login(userTemp.username, userTemp.password).token)
+  onLogin() {
+    this.authService.login(this.username, this.password).subscribe(
+      token =>  console.log("User autenticated with token: ", token)
+    )
   }
 
   onLogout() {
@@ -40,8 +37,4 @@ export class LoginFormComponent implements OnInit {
   }
 
 
-  getUsers(): void {
-    this.userService.getUsers()
-      .subscribe(users => this.users = users);
-  }
 }
