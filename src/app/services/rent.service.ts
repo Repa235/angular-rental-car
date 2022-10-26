@@ -4,13 +4,14 @@ import {Observable, of} from "rxjs";
 
 import {catchError, tap} from "rxjs/operators";
 import { Rent } from '../models/rent';
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class RentService {
 
-  rentsURL = 'api/rents'
+  rentsURL = environment.apiURI+'api/rent'
 
   constructor( private http: HttpClient) {
   }

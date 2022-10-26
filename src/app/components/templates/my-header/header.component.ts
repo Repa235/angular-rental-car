@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {User} from "../../../models/user";
+import {Component, OnInit, SimpleChanges} from '@angular/core';
+import {AuthService} from "../../../services/auth.service";
 
 @Component({
   selector: 'app-header',
@@ -7,13 +7,20 @@ import {User} from "../../../models/user";
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  user:any = null
 
-  constructor() {
+  userRole: any = null
+
+  constructor(private authService: AuthService) {
   }
 
   ngOnInit(): void {
+    this.userRole = this.authService.getRole()
+  }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes && changes['userRole']) {
+      this.userRole = this.authService.getRole()
+    }
   }
 
 

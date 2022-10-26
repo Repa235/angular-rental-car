@@ -5,16 +5,16 @@ import {Rent} from "../models/rent";
 import {catchError, tap} from "rxjs/operators";
 import {Vehicle} from "../models/vehicle";
 import {User} from "../models/user";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class VehicleService {
 
-  vehicleURL = 'api/vehicles'
+  vehicleURL = environment.apiURI+'/api/vehicle'
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
 
   private log(message: string) {
@@ -43,7 +43,7 @@ export class VehicleService {
     console.log('Inizio la chiamata')
     return this.http.get<Vehicle[]>(this.vehicleURL)
       .pipe(
-        tap(_ => this.log('fetched rents')),
+        tap(_ => this.log('fetched vehicles')),
         catchError(this.handleError<Vehicle[]>('getVehicle', []))
       )
   }
@@ -61,7 +61,7 @@ export class VehicleService {
   /** POST: add a new Vehicle to the server */
   addVehicle(vehicle: Vehicle): Observable<Vehicle> {
     this.log('Adding vehicle: ' + vehicle.carBrand + '' + vehicle.model)
-    return this.http.post<Vehicle>(this.vehicleURL, vehicle, this.httpOptions).pipe(
+    return this.http.post<Vehicle>(this.vehicleURL+"/addOrUpdate", vehicle, this.httpOptions).pipe(
       tap((newVehicle: Vehicle) => this.log(`added Vehicle w/ id=${newVehicle.id}`)),
       catchError(this.handleError<Vehicle>('addVehicle'))
     );

@@ -1,7 +1,5 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {NgForm} from "@angular/forms";
+import {Component, OnInit} from '@angular/core';
 import {UserService} from "../../../services/user.service";
-import {User} from "../../../models/user";
 import {Router} from "@angular/router";
 import {AuthService} from "../../../services/auth.service";
 
@@ -28,12 +26,18 @@ export class LoginFormComponent implements OnInit {
 
   onLogin() {
     this.authService.login(this.username, this.password).subscribe(
-      token =>  console.log("User autenticated with token: ", token)
-    )
+      token =>  console.log("User autenticated with token: ", token));
+
+   /* this.router.navigate(['/homepage']).then(() => {
+      window.location.reload();
+    });*/
   }
 
   onLogout() {
     this.authService.removeToken();
+    this.router.navigate(['/homepage']) .then(() => {
+      window.location.reload();
+    });
   }
 
 

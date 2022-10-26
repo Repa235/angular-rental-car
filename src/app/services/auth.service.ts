@@ -43,11 +43,14 @@ export class AuthService {
   login(username: string, password: string) {
     return this.http.post<Token>(this.authURL, {username: username, password: password}, this.httpOptions).pipe(
       map(data => {
+        console.log(data)
         sessionStorage.setItem("token", "Bearer " + data.token);
+        sessionStorage.setItem("role", data.role)
         sessionStorage.setItem("isLogged", "true")
       })
     )
   }
+
 
   isLogged(): boolean {
     let isLogged = sessionStorage.getItem("isLogged")
@@ -57,16 +60,24 @@ export class AuthService {
     return false;
   }
 
+  getRole = (): string => {
+    var role = sessionStorage.getItem("role")
+    return (role) ? role : "";
+  }
+
   removeToken() {
     console.log('Token removed')
     sessionStorage.removeItem('token')
     sessionStorage.removeItem("isLogged")
+    sessionStorage.removeItem("role")
   }
 
   getToken = (): string => {
     var tokenAuth = sessionStorage.getItem("token")
     return (tokenAuth) ? tokenAuth : "";
   }
+
+
 
 
 }

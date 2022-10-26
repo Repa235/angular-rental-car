@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   server: "localhost",
   port: "8050",
+  apiURI: "http://localhost:8050",
   authServerURI: "http://localhost:8050/api/auth"
 };
 

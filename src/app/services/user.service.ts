@@ -5,13 +5,14 @@ import {User} from "../models/user";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {catchError, map, tap} from 'rxjs/operators';
 import {forEach} from "lodash";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  usersURL = 'api/users'
+  usersURL = environment.apiURI+'api/user'
 
   constructor(private http: HttpClient) {
   }

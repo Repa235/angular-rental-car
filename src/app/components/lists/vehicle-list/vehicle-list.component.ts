@@ -8,6 +8,7 @@ import {MyHeaders} from "../../templates/my-table/config/MyHeaders";
 import {VehicleService} from "../../../services/vehicle.service";
 import {logMessages} from "@angular-devkit/build-angular/src/builders/browser-esbuild/esbuild";
 import {Router} from "@angular/router";
+import {Roles} from "../../../models/roles";
 
 @Component({
   selector: 'app-vehicle-list',
@@ -58,7 +59,6 @@ export class VehicleListComponent implements OnInit {
   getVehicles(): void {
     this.vehicleService.getVehicles()
       .subscribe(vehicles => this.vehicles = vehicles)
-
   }
 
   getAction(action: MyActions, row: any) {

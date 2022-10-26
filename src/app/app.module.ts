@@ -9,26 +9,21 @@ import { MyFooterComponent } from './components/templates/my-footer/my-footer.co
 
 import { RouterModule } from '@angular/router';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-//import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-//import { InMemoryDataService} from "./services/in-memory-data.service";
-
 import {MyTableComponent} from "./components/templates/my-table/my-table.component";
 import {MyButtonComponent} from "./components/templates/my-button/my-button.component";
 import {PaginationPipe} from "./components/templates/my-table/pipes/pagination.pipe";
 import {SortPipePipe} from "./components/templates/my-table/pipes/sort-pipe.pipe";
-
-
 import { UserFormComponent } from './components/forms/user-form/user-form.component';
-
 import { VehicleFormComponent } from './components/forms/vehicle-form/vehicle-form.component';
 import { RentFormComponent } from './components/forms/rent-form/rent-form.component';
-
 import { LoginFormComponent } from './components/forms/login-form/login-form.component';
 import {FormsModule} from "@angular/forms";
 import { UserListComponent } from './components/lists/user-list/user-list.component';
 import { VehicleListComponent } from './components/lists/vehicle-list/vehicle-list.component';
 import { RentListComponent } from './components/lists/rent-list/rent-list.component';
 import {AuthInterceptor} from "../interceptors/auth.interceptors";
+import {RouteGuardService} from "./services/route-guard.service";
+import {Roles} from "./models/roles";
 
 
 
@@ -43,10 +38,8 @@ import {AuthInterceptor} from "../interceptors/auth.interceptors";
     PaginationPipe,
     SortPipePipe,
     UserFormComponent,
-
     VehicleFormComponent,
     RentFormComponent,
-
     LoginFormComponent,
     UserListComponent,
     VehicleListComponent,
@@ -56,19 +49,25 @@ import {AuthInterceptor} from "../interceptors/auth.interceptors";
     BrowserModule,
     RouterModule.forRoot([
       {path: 'homepage', component: HomepageComponent},
-      {path: 'form/login', component: LoginFormComponent},
-      {path: 'form/rent', component: RentFormComponent},
-      {path: 'form/rent/:idRent', component: RentFormComponent},
-      {path: 'form/user', component: UserFormComponent},
-      {path: 'form/user/:idUser', component: UserFormComponent},
-      {path: 'form/vehicle', component: VehicleFormComponent},
-      {path: 'form/vehicle/:idVehicle', component: VehicleFormComponent},
-      {path: 'list/user', component: UserListComponent},
+
+      {path: 'form/rent', component: RentFormComponent,  canActivate: [RouteGuardService],
+        data: {roles: [Roles.user,Roles.admin]}},
+      {path: 'form/rent/:idRent', component: RentFormComponent,  canActivate: [RouteGuardService],
+        data: {roles: [Roles.user,Roles.admin]}},
+      {path: 'form/user', component: UserFormComponent,  canActivate: [RouteGuardService],
+        data: {roles: [Roles.user,Roles.admin]}},
+      {path: 'form/user/:idUser', component: UserFormComponent,  canActivate: [RouteGuardService],
+        data: {roles: [Roles.user,Roles.admin]}},
+      {path: 'form/vehicle', component: VehicleFormComponent,  canActivate: [RouteGuardService],
+        data: {roles: [Roles.admin]}},
+      {path: 'form/vehicle/:idVehicle', component: VehicleFormComponent,  canActivate: [RouteGuardService],
+        data: {roles: [Roles.user,Roles.admin]}},
+      {path: 'list/user', component: UserListComponent,  canActivate: [RouteGuardService],
+        data: {roles: [Roles.admin]}},
       {path: 'list/vehicle', component: VehicleListComponent},
-      {path: 'list/rent', component: RentListComponent},
+      {path: 'list/rent', component: RentListComponent,  canActivate: [RouteGuardService],
+        data: {roles: [Roles.user,Roles.admin]}},
       {path: 'login', component: LoginFormComponent},
-
-
       {path: '', redirectTo: '/homepage', pathMatch: 'full'},
     ]),
     HttpClientModule,
