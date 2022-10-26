@@ -11,7 +11,7 @@ import {environment} from "../../environments/environment";
 })
 export class RentService {
 
-  rentsURL = environment.apiURI+'api/rent'
+  rentsURL = environment.apiURI+'/api/rent'
 
   constructor( private http: HttpClient) {
   }

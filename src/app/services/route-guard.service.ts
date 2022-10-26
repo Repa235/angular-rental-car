@@ -10,16 +10,18 @@ export class RouteGuardService implements CanActivate {
 
   roles: string[] = new Array(0); //role of logged user
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {
+  }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     let role: string = this.authService.getRole()
+    this.roles.push(role)
+
 
     if (!this.authService.isLogged()) {
       this.router.navigate(['/login']);
       return false;
-    }
-    else {
+    } else {
       let roles: string[] = route.data['roles'] //roles to access the page
 
       if (roles === null || roles.length === 0) { //everyone can access the page

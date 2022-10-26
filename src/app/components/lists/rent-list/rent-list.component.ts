@@ -46,9 +46,9 @@ export class RentListComponent implements OnInit {
     this.pagination = {itemPerPage: 3, itemPerPageOptions: [3, 6, 9]};
 
     this.header = [
-      {key: "id", label: "Id"}, {key: "userId", label: "User id"},
-      {key: "vehicleId", label: "Veihicle id"}, {key: "stardDate", label: "Start date"},
-      {key: "endDate", label: "End date"}, {key: "isApproved", label: "Approved"}
+      {key: "id", label: "Id"}, {key: "userDto", label: "User id"},
+      {key: "vehicleDto", label: "Vehicle"}, {key: "startDate", label: "Start date"},
+      {key: "endDate", label: "End date"}, {key: "approved", label: "Approved"}
     ];
 
     this.tableconfig = {
@@ -60,7 +60,7 @@ export class RentListComponent implements OnInit {
   getRents(): void {
     this.rentService.getRents()
       .subscribe(rents => this.rents = rents)
-    this.rents.forEach(e => console.log(e))
+    console.log(this.rents)
   }
 
   getAction(action: MyActions, row: any) {

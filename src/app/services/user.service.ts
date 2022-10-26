@@ -12,7 +12,7 @@ import {environment} from "../../environments/environment";
 })
 export class UserService {
 
-  usersURL = environment.apiURI+'api/user'
+  usersURL = environment.apiURI+'/api/user'
 
   constructor(private http: HttpClient) {
   }
@@ -52,7 +52,7 @@ export class UserService {
 
   /** GET user by id. Will 404 if id not found */
   getUser(id: number): Observable<User> {
-    const url = `${this.usersURL}/${id}`;
+    const url = `${this.usersURL}/get/${id}`;
     return this.http.get<User>(url).pipe(
       tap(_ => this.log(`fetched user id=${id}`)),
       catchError(this.handleError<User>(`getuser id=${id}`))
@@ -62,7 +62,7 @@ export class UserService {
 
   /** PUT: update the user on the server */
   updateUser(user: User): Observable<any> {
-    return this.http.put(this.usersURL, user, this.httpOptions).pipe(
+    return this.http.put(this.usersURL+"/addOrUpdate", user, this.httpOptions).pipe(
       tap(_ => this.log(`updated user id=${user.id}`)),
       catchError(this.handleError<any>('updateuser'))
     );
@@ -70,7 +70,7 @@ export class UserService {
 
   /** POST: add a new user to the server */
   addUser(user: User): Observable<User> {
-    return this.http.post<User>(this.usersURL, user, this.httpOptions).pipe(
+    return this.http.post<User>(this.usersURL+"/addOrUpdate", user, this.httpOptions).pipe(
       tap((newUser: User) => this.log(`added user w/ id=${newUser.id}`)),
       catchError(this.handleError<User>('addUser'))
     );
@@ -78,7 +78,7 @@ export class UserService {
 
   /** DELETE: delete the hero from the server */
   deleteUser(id: number): Observable<User> {
-    const url = `${this.usersURL}/${id}`;
+    const url = `${this.usersURL}/remove/${id}`;
     return this.http.delete<User>(url, this.httpOptions).pipe(
       tap(_ => this.log(`deleted user id=${id}`)),
       catchError(this.handleError<User>('deleteUser'))

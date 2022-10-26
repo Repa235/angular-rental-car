@@ -17,11 +17,9 @@ export class HeaderComponent implements OnInit {
     this.userRole = this.authService.getRole()
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes && changes['userRole']) {
-      this.userRole = this.authService.getRole()
-    }
-  }
 
+  ngDoCheck() {
+    this.userRole = this.authService.getRole()
+  }
 
 }
