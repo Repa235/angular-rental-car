@@ -48,7 +48,7 @@ export class RentService {
 
   /** GET rent by id. Will 404 if id not found */
   getRent(id: number): Observable<Rent> {
-    const url = `${this.rentsURL}/${id}`;
+    const url = `${this.rentsURL}/get/${id}`;
     return this.http.get<Rent>(url).pipe(
       tap(_ => this.log(`fetched rent id=${id}`)),
       catchError(this.handleError<Rent>(`getRent id=${id}`))
@@ -57,7 +57,7 @@ export class RentService {
 
   /** PUT: update the rent on the server */
   updateRent(rent: Rent): Observable<any> {
-    return this.http.put(this.rentsURL, rent, this.httpOptions).pipe(
+    return this.http.put(this.rentsURL+"/addOrUpdate", rent, this.httpOptions).pipe(
       tap(_ => this.log(`updated rent id=${rent.id}`)),
       catchError(this.handleError<any>('updateRent'))
     );
@@ -65,7 +65,7 @@ export class RentService {
 
   /** POST: add a new rent to the server */
   addRent(rent: Rent): Observable<Rent> {
-    return this.http.post<Rent>(this.rentsURL, rent, this.httpOptions).pipe(
+    return this.http.post<Rent>(this.rentsURL+"/addOrUpdate", rent, this.httpOptions).pipe(
       tap((newRent: Rent) => this.log(`added rent w/ id=${newRent.id}`)),
       catchError(this.handleError<Rent>('addrent'))
     );
@@ -73,7 +73,7 @@ export class RentService {
 
   /** DELETE: delete the hero from the server */
   deleteRent(id: number): Observable<Rent> {
-    const url = `${this.rentsURL}/${id}`;
+    const url = `${this.rentsURL}/remove/${id}`;
     return this.http.delete<Rent>(url, this.httpOptions).pipe(
       tap(_ => this.log(`deleted rent id=${id}`)),
       catchError(this.handleError<Rent>('deleteRent'))
