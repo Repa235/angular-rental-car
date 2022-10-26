@@ -50,7 +50,7 @@ export class VehicleService {
 
   /** GET vehicle by id. Will 404 if id not found */
   getVehicle(id: number): Observable<Vehicle> {
-    const url = `${this.vehicleURL}/${id}`;
+    const url = `${this.vehicleURL}/get/${id}`;
     return this.http.get<Vehicle>(url)
       .pipe(
       tap(_ => this.log(`fetched vehicle id=${id}`)),
@@ -70,7 +70,7 @@ export class VehicleService {
 
   /** PUT: update the Vehicle on the server */
   updateVehicle(vehicle: Vehicle): Observable<any> {
-    return this.http.put(this.vehicleURL, vehicle, this.httpOptions).pipe(
+    return this.http.put(this.vehicleURL+"/addOrUpdate", vehicle, this.httpOptions).pipe(
       tap(_ => this.log(`updated Vehicle id=${vehicle.id}`)),
       catchError(this.handleError<any>('updateVehicle'))
     );
@@ -78,7 +78,7 @@ export class VehicleService {
 
   /** DELETE: delete the Vehicle from the server */
   deleteVehicle(id: number): Observable<Vehicle> {
-    const url = `${this.vehicleURL}/${id}`;
+    const url = `${this.vehicleURL}/remove/${id}`;
     return this.http.delete<Vehicle>(url, this.httpOptions).pipe(
       tap(_ => this.log(`deleted Vehicle id=${id}`)),
       catchError(this.handleError<Vehicle>('deleteVehicle'))
