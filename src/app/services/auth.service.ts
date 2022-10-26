@@ -65,7 +65,7 @@ export class AuthService {
     return (role) ? role : "";
   }
 
-  removeToken() {
+  logout() {
     console.log('Token removed')
     sessionStorage.removeItem('token')
     sessionStorage.removeItem("isLogged")

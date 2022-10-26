@@ -21,7 +21,8 @@
 
 
       <div class="text-end">
-        <a routerLink="/login" class="nav-link px-2 text-white">Login</a>
+        <a *ngIf="!userLogged" routerLink="/login" class="nav-link px-2 text-white">Login</a>
+        <a *ngIf="userLogged" routerLink="" class="nav-link px-2 text-white" (click)="doLogout()">Logout</a>
       </div>
 
     </div>

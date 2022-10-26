@@ -9,6 +9,7 @@ import {MyHeaders} from "../../templates/my-table/config/MyHeaders";
 import {forEach} from "lodash";
 import {Router} from "@angular/router";
 import {Rent} from "../../../models/rent";
+import {AuthService} from "../../../services/auth.service";
 
 @Component({
   selector: 'app-rent-list',
@@ -24,26 +25,33 @@ export class RentListComponent implements OnInit {
   search!: MySearch;
   pagination!: MyPagination;
   header!: MyHeaders[];
+  userType!: string;
 
 
 
-  constructor(private rentService: RentService, private router: Router) {
+  constructor(private rentService: RentService, private router: Router, private authService: AuthService) {
   }
 
   ngOnInit(): void {
     this.getRents()
+    this.userType=this.authService.getRole()
 
-    this.actionButtons = [
-      {text: 'Edit', buttonTop: false, customClass: 'btn btn-outline-secondary princButton', typeOfEntity: 'rent'},
-      {text: 'Delete', buttonTop: false, customClass: 'btn btn-outline-secondary princButton', typeOfEntity: 'rent'},
-      {text: 'Approve', buttonTop: false, customClass: 'btn btn-outline-secondary princButton', typeOfEntity: 'rent'},
-      {text: 'Add', buttonTop: true, customClass: 'btn btn-outline-secondary princButton', typeOfEntity: 'rent'}]
-
+    if (this.userType==="ROLE_USER") {
+      this.actionButtons = [
+        {text: 'Edit', buttonTop: false, customClass: 'btn btn-outline-secondary princButton', typeOfEntity: 'rent'},
+        {text: 'Delete', buttonTop: false, customClass: 'btn btn-outline-secondary princButton', typeOfEntity: 'rent'},
+        {text: 'Add', buttonTop: true, customClass: 'btn btn-outline-secondary princButton', typeOfEntity: 'rent'}]
+    } else {
+      this.actionButtons = [
+        {text: 'Delete', buttonTop: false, customClass: 'btn btn-outline-secondary princButton', typeOfEntity: 'rent'},
+        {text: 'Approve', buttonTop: false, customClass: 'btn btn-outline-secondary princButton', typeOfEntity: 'rent'}]
+    }
     this.order = {defaultColumn: "id", orderType: "asc"}
 
     this.search = {columns: ["vehicleId", "userId", "id"]};
 
     this.pagination = {itemPerPage: 3, itemPerPageOptions: [3, 6, 9]};
+
 
     this.header = [
       {key: "id", label: "Id"}, {key: "userDto", label: "User id"},

@@ -15,8 +15,9 @@ export class RentFormComponent implements OnInit {
 
   rent: any = {};
   idRent?: any
-  vehicleList!: Vehicle[];
+  vehicleList: Vehicle[] = [];
   showCars: boolean = false
+  needToFindFreeVehicles: boolean = true
 
   constructor(
     private rentService: RentService,
@@ -28,10 +29,9 @@ export class RentFormComponent implements OnInit {
   ngOnInit(): void {
     const routeParams = this.route.snapshot.paramMap;
     this.idRent = routeParams.get('idRent');
-    this.vehicleService.getVehicles()
-      .subscribe(vehicles => this.vehicleList = vehicles)
 
-    if(this.idRent != null) {
+
+    if (this.idRent != null) {
       this.rentService.getRent(this.idRent).subscribe((result: Rent) => {
         this.rent = result;
       });
@@ -40,13 +40,29 @@ export class RentFormComponent implements OnInit {
 
   }
 
+  ngDoCheck(): void {
+    if (this.rent.startDate && this.rent.endDate && this.needToFindFreeVehicles) {
+      this.getFreeVehicles()
+      this.needToFindFreeVehicles = false
+    }
+  }
+
+  resetFindFreeVehicles(){
+    if(!this.needToFindFreeVehicles){this.needToFindFreeVehicles=true}
+  }
 
   addOrUpdateRent(rentForm: any) {
-    if(this.idRent == null) {
+    if (this.idRent == null) {
       this.rentService.addRent(rentForm).subscribe(() => this.router.navigate(['/list/rent']));
     } else {
       this.rentService.updateRent(rentForm).subscribe(() => this.router.navigate(['']));
     }
+  }
+
+  getFreeVehicles() {
+    console.log("freeee")
+    var dates = {"startDate": this.rent.startDate, "endDate": this.rent.endDate}
+    this.vehicleService.getFreeVehicles(dates).subscribe(vehicles => this.vehicleList = vehicles)
   }
 
 }

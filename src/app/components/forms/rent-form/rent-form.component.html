@@ -4,8 +4,8 @@
     <form #rentForm="ngForm" (ngSubmit)="addOrUpdateRent(rentForm.value)">
     <div class="input-group mb-3">
       <span class="input-group-text">Start date:</span>
-      <input type="date" class="form-control" name="startDate" placeholder="" [(ngModel)]="rent.startDate" >
-      <input type="date" class="form-control" name="endDate" placeholder="" [(ngModel)]="rent.endDate">
+      <input type="date" class="form-control" name="startDate" placeholder="" [(ngModel)]="rent.startDate" (change)="resetFindFreeVehicles()" >
+      <input type="date" class="form-control" name="endDate" placeholder="" [(ngModel)]="rent.endDate" (change)="resetFindFreeVehicles()">
     </div>
 
     <div class="input-group mb-3" *ngIf="rent.startDate && rent.endDate"> <!-- *ngIf="rent.startDate&&rent.endDate" -->

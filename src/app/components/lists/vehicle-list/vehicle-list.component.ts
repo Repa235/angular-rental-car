@@ -9,6 +9,7 @@ import {VehicleService} from "../../../services/vehicle.service";
 import {logMessages} from "@angular-devkit/build-angular/src/builders/browser-esbuild/esbuild";
 import {Router} from "@angular/router";
 import {Roles} from "../../../models/roles";
+import {AuthService} from "../../../services/auth.service";
 
 @Component({
   selector: 'app-vehicle-list',
@@ -24,22 +25,33 @@ export class VehicleListComponent implements OnInit {
   search!: MySearch;
   pagination!: MyPagination;
   header!: MyHeaders[];
+  userType!: string;
 
-  constructor(private vehicleService: VehicleService, private router: Router) {
+  constructor(private vehicleService: VehicleService, private router: Router, private authService: AuthService) {
   }
 
   ngOnInit(): void {
     this.getVehicles()
+    this.userType = this.authService.getRole()
 
+    if (this.userType === 'ROLE_ADMIN') {
+      this.actionButtons = [{
+        text: 'Edit',
+        buttonTop: false,
+        customClass: 'btn btn-outline-secondary princButton',
+        typeOfEntity: 'vehicle'
+      },
+        {
+          text: 'Delete',
+          buttonTop: false,
+          customClass: 'btn btn-outline-secondary princButton',
+          typeOfEntity: 'vehicle'
+        },
+        {text: 'Add', buttonTop: true, customClass: 'btn btn-outline-secondary princButton', typeOfEntity: 'vehicle'}]
+    } else {
+      this.actionButtons = []
+    }
 
-    this.actionButtons = [{
-      text: 'Edit',
-      buttonTop: false,
-      customClass: 'btn btn-outline-secondary princButton',
-      typeOfEntity: 'vehicle'
-    },
-      {text: 'Delete', buttonTop: false, customClass: 'btn btn-outline-secondary princButton', typeOfEntity: 'vehicle'},
-      {text: 'Add', buttonTop: true, customClass: 'btn btn-outline-secondary princButton', typeOfEntity: 'vehicle'}]
     this.order = {defaultColumn: "id", orderType: "asc"}
     this.search = {columns: ["carBrand", "model", "type"]};
     this.pagination = {itemPerPage: 3, itemPerPageOptions: [3, 6, 9]};

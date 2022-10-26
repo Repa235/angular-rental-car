@@ -58,6 +58,15 @@ export class VehicleService {
     );
   }
 
+  /** GET vehicle by id. Will 404 if id not found */
+  getFreeVehicles(dates: any): Observable<Vehicle[]> {
+    const url = `${this.vehicleURL}/free`;
+    return this.http.post<Vehicle[]>(url,dates, this.httpOptions)
+      .pipe(tap((_=>this.log("Veicoli trovati"))),
+        catchError(this.handleError<Vehicle[]>('!??')
+        ));
+  }
+
   /** POST: add a new Vehicle to the server */
   addVehicle(vehicle: Vehicle): Observable<Vehicle> {
     this.log('Adding vehicle: ' + vehicle.carBrand + '' + vehicle.model)
