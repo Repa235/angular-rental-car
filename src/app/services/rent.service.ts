@@ -20,9 +20,7 @@ export class RentService {
     console.log(`rent service: ${message}`);
   }
 
-  httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  };
+  httpOptions = {headers: new HttpHeaders({ 'Content-Type': 'application/json' })};
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
@@ -40,6 +38,15 @@ export class RentService {
 
   getRents(): Observable<Rent[]> {
     return this.http.get<Rent[]>(this.rentsURL)
+      .pipe(
+        tap(_ => this.log('fetched rents')),
+        catchError(this.handleError<Rent[]>('getRents', []))
+      );
+  }
+
+  getRentsOfUser(id:number): Observable<Rent[]> {
+    const url = `${this.rentsURL}/rentsOf/${id}`;
+    return this.http.get<Rent[]>(url)
       .pipe(
         tap(_ => this.log('fetched rents')),
         catchError(this.handleError<Rent[]>('getRents', []))

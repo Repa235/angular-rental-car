@@ -7,7 +7,7 @@ import {MySearch} from "../../templates/my-table/config/MySearch";
 import {MyPagination} from "../../templates/my-table/config/MyPagination";
 import {MyHeaders} from "../../templates/my-table/config/MyHeaders";
 import {forEach} from "lodash";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Rent} from "../../../models/rent";
 import {AuthService} from "../../../services/auth.service";
 
@@ -26,17 +26,27 @@ export class RentListComponent implements OnInit {
   pagination!: MyPagination;
   header!: MyHeaders[];
   userType!: string;
+  userId!: any;
 
 
-
-  constructor(private rentService: RentService, private router: Router, private authService: AuthService) {
+  constructor(private route: ActivatedRoute, private rentService: RentService, private router: Router, private authService: AuthService) {
   }
 
   ngOnInit(): void {
-    this.getRents()
-    this.userType=this.authService.getRole()
 
-    if (this.userType==="ROLE_USER") {
+    const routeParams = this.route.snapshot.paramMap;
+    this.userId = routeParams.get('user')
+    console.log("userid",this.userId)
+    if (this.userId) {
+      var userId = parseInt(this.userId,10)
+      this.getRentsOf(userId)
+    } else {
+      this.getRents()
+    }
+
+    this.userType = this.authService.getRole()
+
+    if (this.userType === "ROLE_USER") {
       this.actionButtons = [
         {text: 'Edit', buttonTop: false, customClass: 'btn btn-outline-secondary princButton', typeOfEntity: 'rent'},
         {text: 'Delete', buttonTop: false, customClass: 'btn btn-outline-secondary princButton', typeOfEntity: 'rent'},
@@ -69,6 +79,10 @@ export class RentListComponent implements OnInit {
     this.rentService.getRents()
       .subscribe(rents => this.rents = rents)
     console.log(this.rents)
+  }
+
+  getRentsOf(userId: any) {
+    this.rentService.getRentsOfUser(userId).subscribe((rents => this.rents = rents))
   }
 
   getAction(action: MyActions, row: any) {

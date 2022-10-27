@@ -30,14 +30,11 @@ export class RentFormComponent implements OnInit {
     const routeParams = this.route.snapshot.paramMap;
     this.idRent = routeParams.get('idRent');
 
-
     if (this.idRent != null) {
       this.rentService.getRent(this.idRent).subscribe((result: Rent) => {
         this.rent = result;
       });
     }
-    console.log('Prentoazione trovata')
-
   }
 
   ngDoCheck(): void {
@@ -60,7 +57,6 @@ export class RentFormComponent implements OnInit {
   }
 
   getFreeVehicles() {
-    console.log("freeee")
     var dates = {"startDate": this.rent.startDate, "endDate": this.rent.endDate}
     this.vehicleService.getFreeVehicles(dates).subscribe(vehicles => this.vehicleList = vehicles)
   }

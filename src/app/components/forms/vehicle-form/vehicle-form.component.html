@@ -16,7 +16,11 @@
         <input type="text" class="form-control" name="type" placeholder="Type" [(ngModel)]="vehicle.type">
       </div>
       <input type="hidden" [(ngModel)]="vehicle.id" name="id" [value]="vehicle.id">
-      <button type="submit" class="btn btn-outline-primary">Submit</button>
+      <div class="input-group mb-3">
+        <div class="col-auto">
+          <button type="submit" class="btn btn-outline-primary">Submit</button>
+        </div>
+      </div>
     </form>
   </div>
 </div>

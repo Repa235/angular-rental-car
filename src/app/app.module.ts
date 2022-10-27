@@ -67,6 +67,8 @@ import {Roles} from "./models/roles";
       {path: 'list/vehicle', component: VehicleListComponent},
       {path: 'list/rent', component: RentListComponent,  canActivate: [RouteGuardService],
         data: {roles: [Roles.user,Roles.admin]}},
+      {path: 'list/rentOf/:user', component: RentListComponent,  canActivate: [RouteGuardService],
+        data: {roles: [Roles.user,Roles.admin]}},
       {path: 'login', component: LoginFormComponent},
       {path: '', redirectTo: '/homepage', pathMatch: 'full'},
     ]),
