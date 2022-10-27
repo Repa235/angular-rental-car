@@ -5,6 +5,7 @@ import {VehicleService} from "../../../services/vehicle.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {User} from "../../../models/user";
 import {RentService} from "../../../services/rent.service";
+import {AuthService} from "../../../services/auth.service";
 
 @Component({
   selector: 'app-rent-form',
@@ -22,6 +23,7 @@ export class RentFormComponent implements OnInit {
   constructor(
     private rentService: RentService,
     private vehicleService: VehicleService,
+    private authService: AuthService,
     private route: ActivatedRoute,
     private router: Router) {
   }
@@ -49,10 +51,22 @@ export class RentFormComponent implements OnInit {
   }
 
   addOrUpdateRent(rentForm: any) {
+
+    var finalRent: Rent = {
+      id: this.idRent,
+      userDto: {id: this.authService.getUserId()},
+      vehicleDto: {id: parseInt(rentForm.vehicleDto)},
+      isApproved: false,
+      startDate: rentForm.startDate,
+      endDate: rentForm.endDate
+    }
+
+    console.log(finalRent)
+
     if (this.idRent == null) {
-      this.rentService.addRent(rentForm).subscribe(() => this.router.navigate(['/list/rent']));
+      this.rentService.addRent(finalRent).subscribe(() => this.router.navigate(['/list/rent']));
     } else {
-      this.rentService.updateRent(rentForm).subscribe(() => this.router.navigate(['']));
+      this.rentService.updateRent(finalRent).subscribe(() => this.router.navigate(['']));
     }
   }
 

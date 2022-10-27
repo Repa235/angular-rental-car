@@ -1,9 +1,11 @@
 import * as moment from "moment/moment";
+import {Vehicle} from "./vehicle";
+import {User} from "./user";
 
 export interface Rent {
   id: number;
-  userId: number;
-  vehicleId: number;
+  userDto: User;
+  vehicleDto: Vehicle;
   startDate: moment.Moment;
   endDate: moment.Moment;
   isApproved: boolean;

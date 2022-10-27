@@ -6,17 +6,21 @@
         <span class="input-group-text">Start date:</span>
         <input type="date" class="form-control" name="startDate" placeholder="" [(ngModel)]="rent.startDate"
                (change)="resetFindFreeVehicles()">
+        <span class="input-group-text">End date:</span>
         <input type="date" class="form-control" name="endDate" placeholder="" [(ngModel)]="rent.endDate"
                (change)="resetFindFreeVehicles()">
       </div>
 
-      <div class="input-group mb-3" *ngIf="rent.startDate && rent.endDate">
-        <!-- *ngIf="rent.startDate&&rent.endDate" -->
-        <span class="input-group-text">Veicolo</span>
-        <select class="form-select">
-          <option *ngFor="let v of vehicleList">{{v.carBrand + " " + v.model}}</option>
+
+      <ng-container *ngIf="rent.startDate && rent.endDate" >
+        <div class="input-group mb-3" >
+          <span class="input-group-text">Vehicle</span>
+        <select class="form-select" name="vehicleDto" [(ngModel)]="rent.vehicleDto">
+          <option *ngFor="let v of vehicleList" value="{{v.id}}">{{v.carBrand + " " + v.model}}</option>
         </select>
-      </div>
+        </div>
+      </ng-container>
+
       <input type="hidden" [(ngModel)]="rent.id" name="id" [value]="rent.id">
       <div class="input-group mb-3">
         <div class="col-auto">
