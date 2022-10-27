@@ -46,6 +46,7 @@ export class AuthService {
         console.log(data)
         sessionStorage.setItem("token", "Bearer " + data.token);
         sessionStorage.setItem("role", data.role)
+        sessionStorage.setItem("userid", data.userid)
         sessionStorage.setItem("isLogged", "true")
       })
     )
@@ -65,9 +66,15 @@ export class AuthService {
     return (role) ? role : "";
   }
 
+  getUserId = (): number => {
+    var id = sessionStorage.getItem("userid")
+    return (id) ? parseInt(id,10) : 0;
+  }
+
   logout() {
     console.log('Token removed')
     sessionStorage.removeItem('token')
+    sessionStorage.removeItem('userid')
     sessionStorage.removeItem("isLogged")
     sessionStorage.removeItem("role")
   }

@@ -35,8 +35,15 @@ export class RentListComponent implements OnInit {
   ngOnInit(): void {
 
     const routeParams = this.route.snapshot.paramMap;
-    this.userId = routeParams.get('user')
-    console.log("userid",this.userId)
+
+    this.userType = this.authService.getRole()
+
+    if(this.userType==="ROLE_ADMIN") {
+      this.userId = routeParams.get('idUser');
+    } else {
+      this.userId = this.authService.getUserId()
+    }
+
     if (this.userId) {
       var userId = parseInt(this.userId,10)
       this.getRentsOf(userId)
@@ -44,7 +51,7 @@ export class RentListComponent implements OnInit {
       this.getRents()
     }
 
-    this.userType = this.authService.getRole()
+
 
     if (this.userType === "ROLE_USER") {
       this.actionButtons = [
