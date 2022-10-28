@@ -48,6 +48,7 @@ export class AuthService {
         sessionStorage.setItem("role", data.role)
         sessionStorage.setItem("userid", data.userid)
         sessionStorage.setItem("isLogged", "true")
+        sessionStorage.setItem("password_entered", password)
       })
     )
   }

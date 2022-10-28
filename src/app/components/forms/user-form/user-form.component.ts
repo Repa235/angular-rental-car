@@ -23,14 +23,18 @@ export class UserFormComponent implements OnInit {
   ngOnInit(): void {
     const routeParams = this.route.snapshot.paramMap;
     this.userType=this.authService.getRole()
+
+
     if(this.userType==="ROLE_ADMIN") {
       this.idUser = routeParams.get('idUser');
     } else {
       this.idUser = this.authService.getUserId()
     }
+
     if(this.idUser != null) {
       this.userService.getUser(this.idUser).subscribe((result: User) => {
         this.user = result;
+        this.user.password=sessionStorage.getItem("password_entered")
       });
     }
     console.log('Utente trovato')
