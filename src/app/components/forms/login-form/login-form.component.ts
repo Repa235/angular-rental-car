@@ -27,18 +27,8 @@ export class LoginFormComponent implements OnInit {
   onLogin() {
     this.authService.login(this.username, this.password).subscribe(
       token =>  console.log("User autenticated with token: ", token));
-
-   /* this.router.navigate(['/homepage']).then(() => {
-      window.location.reload();
-    });*/
   }
 
-  onLogout() {
-    this.authService.logout();
-    this.router.navigate(['/homepage']) .then(() => {
-      window.location.reload();
-    });
-  }
 
 
 }

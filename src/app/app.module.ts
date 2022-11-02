@@ -21,9 +21,11 @@ import {FormsModule} from "@angular/forms";
 import { UserListComponent } from './components/lists/user-list/user-list.component';
 import { VehicleListComponent } from './components/lists/vehicle-list/vehicle-list.component';
 import { RentListComponent } from './components/lists/rent-list/rent-list.component';
-import {AuthInterceptor} from "../interceptors/auth.interceptors";
+import {AuthInterceptor} from "./interceptors/auth.interceptors";
 import {RouteGuardService} from "./services/route-guard.service";
 import {Roles} from "./models/roles";
+import { ErrorComponent } from './components/errors/error/error.component';
+
 
 
 
@@ -44,6 +46,7 @@ import {Roles} from "./models/roles";
     UserListComponent,
     VehicleListComponent,
     RentListComponent,
+    ErrorComponent,
   ],
   imports: [
     BrowserModule,

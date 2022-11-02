@@ -4,13 +4,17 @@
     <form #vehicleForm="ngForm" (ngSubmit)="addOrUpdateVehicle(vehicleForm.value)">
       <div class="input-group mb-3">
         <span class="input-group-text">Car brand</span>
-        <input type="text" class="form-control" name="carBrand" placeholder="Car brand" [(ngModel)]="vehicle.carBrand">
+        <input type="text" class="form-control" name="carBrand" placeholder="Car brand"
+               [(ngModel)]="vehicle.carBrand" #carBrand="ngModel" required>
+
         <span class="input-group-text">Model</span>
-        <input type="text" class="form-control" name="model" placeholder="Model" [(ngModel)]="vehicle.model">
+        <input type="text" class="form-control" name="model" placeholder="Model"
+               [(ngModel)]="vehicle.model" #model="ngModel" required>
+
       </div>
       <div class="input-group mb-3">
         <span class="input-group-text">Registration year</span>
-        <input type="text" class="form-control" name="registrationYear" placeholder="Registration year"
+        <input type="number" class="form-control" name="registrationYear" placeholder="Registration year"
                [(ngModel)]="vehicle.registrationYear">
         <span class="input-group-text">Type</span>
         <input type="text" class="form-control" name="type" placeholder="Type" [(ngModel)]="vehicle.type">
@@ -18,7 +22,12 @@
       <input type="hidden" [(ngModel)]="vehicle.id" name="id" [value]="vehicle.id">
       <div class="input-group mb-3">
         <div class="col-auto">
-          <button type="submit" class="btn btn-outline-primary">Submit</button>
+          <div *ngIf="(carBrand.errors?.['required'] && (carBrand.dirty || carBrand.touched))
+      ||
+      (model.errors?.['required']&& (model.dirty || model.touched))">
+            Car brand and model are required.
+          </div>
+          <button type="submit" class="btn btn-outline-primary" [disabled]="!vehicleForm.valid">Submit</button>
         </div>
       </div>
     </form>

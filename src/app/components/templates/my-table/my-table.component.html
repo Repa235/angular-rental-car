@@ -32,7 +32,7 @@
   <tbody>
   <tr
     *ngFor="let row of data  | pagination :numPageSelected:numberItem4Page | sortPipe : key:  orderType ">
-    <th scope="row" *ngFor="let header of tableConfig.headers">{{row[header.key] }}</th>
+    <th scope="row" *ngFor="let header of tableConfig.headers">{{getValue(header.key, row)}}</th>
     <ng-container *ngFor="let action of tableConfig.actions" >
         <th scope="row" *ngIf="action.buttonTop===false" >
           <app-my-button [buttonConfig]=

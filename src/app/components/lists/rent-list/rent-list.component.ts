@@ -38,19 +38,18 @@ export class RentListComponent implements OnInit {
 
     this.userType = this.authService.getRole()
 
-    if(this.userType==="ROLE_ADMIN") {
+    if (this.userType === "ROLE_ADMIN") {
       this.userId = routeParams.get('idUser');
     } else {
       this.userId = this.authService.getUserId()
     }
 
     if (this.userId) {
-      var userId = parseInt(this.userId,10)
+      var userId = parseInt(this.userId, 10)
       this.getRentsOf(userId)
     } else {
       this.getRents()
     }
-
 
 
     if (this.userType === "ROLE_USER") {
@@ -65,16 +64,22 @@ export class RentListComponent implements OnInit {
     }
     this.order = {defaultColumn: "id", orderType: "asc"}
 
-    this.search = {columns: ["vehicleId", "userId", "id"]};
+    this.search = {columns: ["startDate", "endDate", "approved"]};
 
     this.pagination = {itemPerPage: 3, itemPerPageOptions: [3, 6, 9]};
 
-
-    this.header = [
-      {key: "id", label: "Id"}, {key: "userDto", label: "User id"},
-      {key: "vehicleDto", label: "Vehicle"}, {key: "startDate", label: "Start date"},
-      {key: "endDate", label: "End date"}, {key: "approved", label: "Approved"}
-    ];
+    if (this.userType === "ROLE_USER") {
+      this.header = [
+        {key: "fullNVehicle", label: "Vehicle"}, {key: "startDate", label: "Start date"},
+        {key: "endDate", label: "End date"}, {key: "approved", label: "Approved"}
+      ];
+    } else {
+      this.header = [
+        {key: "fullName", label: "User"},
+        {key: "fullNVehicle", label: "Vehicle"}, {key: "startDate", label: "Start date"},
+        {key: "endDate", label: "End date"}, {key: "approved", label: "Approved"}
+      ];
+    }
 
     this.tableconfig = {
       headers: this.header, order: this.order, search: this.search, pagination: this.pagination,
@@ -84,12 +89,28 @@ export class RentListComponent implements OnInit {
 
   getRents(): void {
     this.rentService.getRents()
-      .subscribe(rents => this.rents = rents)
-    console.log(this.rents)
+      .subscribe(rents => {
+        rents.forEach(r => {
+          r.fullName = r.userDto.name + " " + r.userDto.surname;
+          r.fullNVehicle = r.vehicleDto.carBrand + " " + r.vehicleDto.model;
+        })
+        this.rents = rents
+        console.log("fullnames", rents)
+      })
+
   }
 
   getRentsOf(userId: any) {
-    this.rentService.getRentsOfUser(userId).subscribe((rents => this.rents = rents))
+    this.rentService.getRentsOfUser(userId).subscribe((rents => {
+
+      rents.forEach(r => {
+        r.fullName = r.userDto.name + " " + r.userDto.surname;
+        r.fullNVehicle = r.vehicleDto.carBrand + " " + r.vehicleDto.model;
+      })
+      this.rents = rents
+      console.log("fullnames", rents)
+
+    }))
   }
 
   getAction(action: MyActions, row: any) {

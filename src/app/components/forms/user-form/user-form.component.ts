@@ -14,6 +14,7 @@ export class UserFormComponent implements OnInit {
   idUser?: any
   userType!:string
 
+
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,
@@ -34,7 +35,7 @@ export class UserFormComponent implements OnInit {
     if(this.idUser != null) {
       this.userService.getUser(this.idUser).subscribe((result: User) => {
         this.user = result;
-        this.user.password=sessionStorage.getItem("password_entered")
+        this.user.password=null
       });
     }
     console.log('Utente trovato')

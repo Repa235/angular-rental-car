@@ -2,26 +2,52 @@
   <h2 style="margin-bottom: 2%">User form</h2>
   <div class="row p-4 pb-0 pe-lg-0 pt-lg-5  align-items-center rounded-3 border shadow-lg">
     <form #userForm="ngForm" (ngSubmit)="addOrUpdateUser(userForm.value)">
+      <!-- NAME AND SURNAME-->
       <div class="input-group mb-3">
         <span class="input-group-text">Name</span>
-        <input type="text" class="form-control" name="name" placeholder="Name" [(ngModel)]="user.name">
+        <input type="text" class="form-control" name="name" placeholder="Name" [(ngModel)]="user.name"
+               required #name="ngModel">
         <span class="input-group-text">Surname</span>
-        <input type="text" class="form-control" name="surname" placeholder="Surname" [(ngModel)]="user.surname">
+        <input type="text" class="form-control" name="surname" placeholder="Surname" [(ngModel)]="user.surname"
+               required #surname="ngModel">
       </div>
+      <div *ngIf="(name.errors?.['required'] && (name.dirty || name.touched))
+      ||
+      (surname.errors?.['required']&& (surname.dirty || surname.touched))">
+        Name and surname are required.
+      </div>
+
+      <!-- B-DAY -->
       <div class="input-group mb-3">
         <span class="input-group-text">Birthday</span>
-        <input type="date" class="form-control" name="birthday" placeholder="" [(ngModel)]="user.birthday">
+        <input type="date" class="form-control" name="birthday" placeholder="" [(ngModel)]="user.birthday"
+               required #birthday="ngModel">
       </div>
+      <div *ngIf="(birthday.errors?.['required'] && (birthday.dirty || birthday.touched))">
+        Birthday is required.
+      </div>
+      <!-- USERNAME AND PASSWORD-->
       <div class="input-group mb-3">
         <span class="input-group-text">Username</span>
-        <input type="text" class="form-control" name="username" placeholder="Username" [(ngModel)]="user.username">
+        <input type="text" class="form-control" name="username" placeholder="Username"
+               [(ngModel)]="user.username" required #username="ngModel">
         <span class="input-group-text">Password</span>
-         <input type="text" class="form-control" name="password" placeholder="Password" [(ngModel)]="user.password">
+        <input type="text" class="form-control" name="password" placeholder="Password"
+               [(ngModel)]="user.password" required #password="ngModel">
       </div>
-      <input type="hidden" [(ngModel)]="user.id" name="id" [value]="user.id">
+      <div *ngIf="(username.errors?.['required'] && (username.dirty || username.touched))
+      ||
+      (password.errors?.['required'] && (password.dirty || password.touched))">
+        Username and password are required.
+      </div>
+      <input type="hidden" [(ngModel)]="user.id" name="id"
+             [value]="user.id" >
+
+
+
       <div class="input-group mb-3">
         <div class="col-auto">
-          <button type="submit" class="btn btn-outline-primary">Submit</button>
+          <button type="submit" class="btn btn-outline-primary" [disabled]="!userForm.valid">Submit</button>
         </div>
       </div>
     </form>

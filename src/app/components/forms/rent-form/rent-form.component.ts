@@ -46,8 +46,10 @@ export class RentFormComponent implements OnInit {
     }
   }
 
-  resetFindFreeVehicles(){
-    if(!this.needToFindFreeVehicles){this.needToFindFreeVehicles=true}
+  resetFindFreeVehicles() {
+    if (!this.needToFindFreeVehicles) {
+      this.needToFindFreeVehicles = true
+    }
   }
 
   addOrUpdateRent(rentForm: any) {
@@ -60,6 +62,8 @@ export class RentFormComponent implements OnInit {
       startDate: rentForm.startDate,
       endDate: rentForm.endDate
     }
+
+
 
     console.log(finalRent)
 

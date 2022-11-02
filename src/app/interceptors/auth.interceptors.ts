@@ -4,7 +4,7 @@ import {HttpInterceptor, HttpHandler, HttpRequest} from '@angular/common/http';
 
 
 import {Observable} from 'rxjs';
-import {AuthService} from "../app/services/auth.service";
+import {AuthService} from "../services/auth.service";
 
 const TOKEN_HEADER_KEY = 'Authorization';       // for Spring Boot back-end
 

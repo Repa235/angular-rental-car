@@ -107,5 +107,9 @@ export class MyTableComponent implements OnInit, OnChanges {
     this.outputTab.emit({action: action, row: row})
   }
 
+  getValue(key: string, obj: any):string{
+    return _.get(obj, key);
+  }
+
 
 }
