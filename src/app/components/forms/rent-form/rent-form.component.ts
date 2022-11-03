@@ -130,10 +130,13 @@ export class RentFormComponent implements OnInit {
       if (this.messages.includes(message)) { //I have to remove this control because i do it into the method (?)
         this.removeAMessageFromArray(this.messages, message)
       }
-    }
-    if(this.needToFindFreeVehicles&&this.startDateValidation){
-      this.getFreeVehicles()
-      this.needToFindFreeVehicles=false
+
+
+      if(this.needToFindFreeVehicles&&this.startDateValidation){
+        this.getFreeVehicles()
+        this.needToFindFreeVehicles=false
+      }
+
     }
   }
 
