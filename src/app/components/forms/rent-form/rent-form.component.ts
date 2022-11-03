@@ -49,12 +49,6 @@ export class RentFormComponent implements OnInit {
 
   }
 
-  ngDoCheck(): void {
-    if (this.startDateValidation && this.endDateValidation && this.needToFindFreeVehicles) {
-      this.getFreeVehicles()
-      this.needToFindFreeVehicles = false
-    }
-  }
 
 
   addOrUpdateRent(rentForm: any) {
@@ -114,6 +108,10 @@ export class RentFormComponent implements OnInit {
       }
 
     }
+    if(this.needToFindFreeVehicles&&this.endDateValidation){
+      this.getFreeVehicles()
+      this.needToFindFreeVehicles=false
+    }
   }
 
 
@@ -132,6 +130,10 @@ export class RentFormComponent implements OnInit {
       if (this.messages.includes(message)) { //I have to remove this control because i do it into the method (?)
         this.removeAMessageFromArray(this.messages, message)
       }
+    }
+    if(this.needToFindFreeVehicles&&this.startDateValidation){
+      this.getFreeVehicles()
+      this.needToFindFreeVehicles=false
     }
   }
 
