@@ -10,6 +10,7 @@ import {forEach} from "lodash";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Rent} from "../../../models/rent";
 import {AuthService} from "../../../services/auth.service";
+import * as moment from "moment/moment";
 
 @Component({
   selector: 'app-rent-list',
@@ -27,12 +28,15 @@ export class RentListComponent implements OnInit {
   header!: MyHeaders[];
   userType!: string;
   userId!: any;
+  today!: moment.Moment
 
 
   constructor(private route: ActivatedRoute, private rentService: RentService, private router: Router, private authService: AuthService) {
   }
 
   ngOnInit(): void {
+
+    this.today = moment()
 
     const routeParams = this.route.snapshot.paramMap;
 
@@ -64,19 +68,20 @@ export class RentListComponent implements OnInit {
     }
     this.order = {defaultColumn: "id", orderType: "asc"}
 
-    this.search = {columns: ["startDate", "endDate", "approved"]};
+    this.search = {columns: ["startDate", "endDate", "vehicle"]};
 
     this.pagination = {itemPerPage: 3, itemPerPageOptions: [3, 6, 9]};
 
     if (this.userType === "ROLE_USER") {
       this.header = [
-        {key: "fullNVehicle", label: "Vehicle"}, {key: "startDate", label: "Start date"},
+        {key: "id", label: "Id"},
+        {key: "vehicle", label: "Vehicle"}, {key: "startDate", label: "Start date"},
         {key: "endDate", label: "End date"}, {key: "approved", label: "Approved"}
       ];
     } else {
       this.header = [
-        {key: "fullName", label: "User"},
-        {key: "fullNVehicle", label: "Vehicle"}, {key: "startDate", label: "Start date"},
+        {key: "id", label: "Id"},{key: "fullName", label: "User"},
+        {key: "vehicle", label: "Vehicle"}, {key: "startDate", label: "Start date"},
         {key: "endDate", label: "End date"}, {key: "approved", label: "Approved"}
       ];
     }
@@ -92,7 +97,7 @@ export class RentListComponent implements OnInit {
       .subscribe(rents => {
         rents.forEach(r => {
           r.fullName = r.userDto.name + " " + r.userDto.surname;
-          r.fullNVehicle = r.vehicleDto.carBrand + " " + r.vehicleDto.model;
+          r.vehicle = r.vehicleDto.carBrand + " " + r.vehicleDto.model;
         })
         this.rents = rents
         console.log("fullnames", rents)
@@ -105,13 +110,14 @@ export class RentListComponent implements OnInit {
 
       rents.forEach(r => {
         r.fullName = r.userDto.name + " " + r.userDto.surname;
-        r.fullNVehicle = r.vehicleDto.carBrand + " " + r.vehicleDto.model;
+        r.vehicle = r.vehicleDto.carBrand + " " + r.vehicleDto.model;
       })
       this.rents = rents
       console.log("fullnames", rents)
 
     }))
   }
+
 
   getAction(action: MyActions, row: any) {
     switch (action.text) {
@@ -122,17 +128,42 @@ export class RentListComponent implements OnInit {
 
       case "Edit":
         console.log('Edit ' + action.typeOfEntity + ' ' + row.id)
-        this.router.navigate(['form/rent', row.id])
+        console.log("CDTA: " + this.canDoThisAction(row.startDate))
+        if (this.canDoThisAction(row.startDate)) {
+          this.router.navigate(['form/rent', row.id])
+        } else {
+          window.alert("This rent is expired");
+        }
         break;
 
       case "Delete":
-        console.log('Delete ' + action.typeOfEntity + ' ' + row.id)
-        this.rents = this.rents.filter(rent => rent !== row);
-        this.rentService.deleteRent(row.id).subscribe();
+        if (this.canDoThisAction(row.startDate)) {
+          console.log('Delete ' + action.typeOfEntity + ' ' + row.id)
+          this.rents = this.rents.filter(rent => rent !== row);
+          this.rentService.deleteRent(row.id).subscribe();
+        } else {
+          window.alert("This rent is expired");
+        }
+        break;
+
+      case "Approve":
+        if (this.canDoThisAction(row.startDate)) {
+          console.log('Approve ' + action.typeOfEntity + ' ' + row.id)
+          this.rentService.approveRent(row.id).subscribe()
+        } else {
+          window.alert("This rent is expired");
+        }
         break;
 
 
     }
+  }
+
+  canDoThisAction(startDate: any): boolean {
+    if (moment(startDate).diff(this.today, 'days') <= 2) {
+      return false
+    }
+    return true
   }
 
 }

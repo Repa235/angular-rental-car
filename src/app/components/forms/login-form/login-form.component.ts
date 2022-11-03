@@ -12,17 +12,13 @@ export class LoginFormComponent implements OnInit {
   username!: string;
   password!: string;
 
-
-
   constructor(
     private userService: UserService,
     private router: Router,
-    private authService: AuthService) {
-  }
+    private authService: AuthService
+  ) {}
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void {}
 
   onLogin() {
     this.authService.login(this.username, this.password).subscribe(

@@ -73,7 +73,6 @@ export class RentService {
   /** POST: add a new rent to the server */
   addRent(rent: Rent): Observable<Rent> {
     return this.http.post<Rent>(this.rentsURL+"/addOrUpdate", rent, this.httpOptions).pipe(
-      tap((newRent: Rent) => this.log(`added rent w/ id=${newRent.id}`)),
       catchError(this.handleError<Rent>('addrent'))
     );
   }
@@ -87,6 +86,14 @@ export class RentService {
     );
   }
 
+  /** DELETE: delete the hero from the server */
+  approveRent(id: number): Observable<Rent> {
+    const url = `${this.rentsURL}/approve/${id}`;
+    return this.http.get<Rent>(url, this.httpOptions).pipe(
+      tap(_ => this.log(`approved rent id=${id}`)),
+      catchError(this.handleError<Rent>('ApproveRent'))
+    );
+  }
 
 
 }

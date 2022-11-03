@@ -6,6 +6,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {User} from "../../../models/user";
 import {RentService} from "../../../services/rent.service";
 import {AuthService} from "../../../services/auth.service";
+import * as moment from "moment";
 
 @Component({
   selector: 'app-rent-form',
@@ -17,8 +18,15 @@ export class RentFormComponent implements OnInit {
   rent: any = {};
   idRent?: any
   vehicleList: Vehicle[] = [];
-  showCars: boolean = false
+
   needToFindFreeVehicles: boolean = true
+  startDateValidation: boolean = false
+  endDateValidation: boolean = false
+
+
+  startDate!: moment.Moment
+  today!: moment.Moment
+  messages: string[] = []
 
   constructor(
     private rentService: RentService,
@@ -29,6 +37,7 @@ export class RentFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.today = moment()
     const routeParams = this.route.snapshot.paramMap;
     this.idRent = routeParams.get('idRent');
 
@@ -37,20 +46,16 @@ export class RentFormComponent implements OnInit {
         this.rent = result;
       });
     }
+
   }
 
   ngDoCheck(): void {
-    if (this.rent.startDate && this.rent.endDate && this.needToFindFreeVehicles) {
+    if (this.startDateValidation && this.endDateValidation && this.needToFindFreeVehicles) {
       this.getFreeVehicles()
       this.needToFindFreeVehicles = false
     }
   }
 
-  resetFindFreeVehicles() {
-    if (!this.needToFindFreeVehicles) {
-      this.needToFindFreeVehicles = true
-    }
-  }
 
   addOrUpdateRent(rentForm: any) {
 
@@ -64,9 +69,6 @@ export class RentFormComponent implements OnInit {
     }
 
 
-
-    console.log(finalRent)
-
     if (this.idRent == null) {
       this.rentService.addRent(finalRent).subscribe(() => this.router.navigate(['/list/rent']));
     } else {
@@ -78,5 +80,60 @@ export class RentFormComponent implements OnInit {
     var dates = {"startDate": this.rent.startDate, "endDate": this.rent.endDate}
     this.vehicleService.getFreeVehicles(dates).subscribe(vehicles => this.vehicleList = vehicles)
   }
+
+
+  //I made this method to copy and paste it in the list component
+  checkStartDate(startDate: any): boolean {
+    if (moment(startDate).diff(this.today, 'days') <= 2) {
+      return false
+    }
+    return true
+  }
+
+  removeAMessageFromArray(messagesArray: string[], message: string) {
+    let indexToDelete = messagesArray.indexOf(message)
+    if (indexToDelete > -1) { // only splice array when item is found
+      messagesArray.splice(indexToDelete, 1); // 2nd parameter means remove one item only
+    }
+  }
+
+  modelChangeOnStartDate(value: any) {
+    this.needToFindFreeVehicles=true
+    console.log("Start date inserted: ", value)
+    let message = "A reservation must be made at least two days before the start date";
+    if (!this.checkStartDate(value)) {
+      this.startDateValidation=false
+      if (!this.messages.includes(message)) {
+        this.messages.push(message)
+      }
+    } else {
+      this.startDate = value
+      this.startDateValidation = true
+      if (this.messages.includes(message)) { //I have to remove this control because i do it into the method (?)
+        this.removeAMessageFromArray(this.messages, message)
+      }
+
+    }
+  }
+
+
+  modelChangeOnEndDate(value: any) {
+    this.needToFindFreeVehicles=true
+    console.log("End date inserted: ", value)
+    let message = "End date must be after start date, we can't travel in time";
+    //if end date is before startdate
+    if (moment(value).isBefore(this.startDate)) {
+      this.endDateValidation=false
+      if (!this.messages.includes(message)) {
+        this.messages.push(message)
+      }
+    } else {
+      this.endDateValidation=true
+      if (this.messages.includes(message)) { //I have to remove this control because i do it into the method (?)
+        this.removeAMessageFromArray(this.messages, message)
+      }
+    }
+  }
+
 
 }

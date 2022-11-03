@@ -10,5 +10,5 @@ export interface Rent {
   endDate: moment.Moment;
   isApproved: boolean;
   fullName?: string;
-  fullNVehicle?:string;
+  vehicle?:string;
 }

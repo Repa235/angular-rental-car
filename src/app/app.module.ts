@@ -24,7 +24,9 @@ import { RentListComponent } from './components/lists/rent-list/rent-list.compon
 import {AuthInterceptor} from "./interceptors/auth.interceptors";
 import {RouteGuardService} from "./services/route-guard.service";
 import {Roles} from "./models/roles";
-import { ErrorComponent } from './components/errors/error/error.component';
+import { SpinnerComponent } from './components/spinner/spinner.component';
+import {NetworkInterceptor} from "./interceptors/network.interceptor";
+
 
 
 
@@ -46,7 +48,7 @@ import { ErrorComponent } from './components/errors/error/error.component';
     UserListComponent,
     VehicleListComponent,
     RentListComponent,
-    ErrorComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,
@@ -79,7 +81,11 @@ import { ErrorComponent } from './components/errors/error/error.component';
     //HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService),
     FormsModule
   ],
-  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: NetworkInterceptor, multi: true},
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
