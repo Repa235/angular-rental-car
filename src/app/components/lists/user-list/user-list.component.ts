@@ -41,7 +41,7 @@ export class UserListComponent implements OnInit {
     this.order = {defaultColumn: "id", orderType: "asc"}
     this.search = {columns: ["id", "name", "surname"]};
     this.pagination = { itemPerPage: 3, itemPerPageOptions: [3, 6, 9] };
-    this.header = [ {key: "id", label: "Id"}, {key: "name", label: "Name"}, {key: "surname", label: "Surname"},
+    this.header = [{key: "name", label: "Name"}, {key: "surname", label: "Surname"},
       {key: "birthday", label: "Birthday"} ];
     this.tableconfig = { headers: this.header, search: this.search, order: this.order,
       pagination:this.pagination, actions:this.actionButtons }

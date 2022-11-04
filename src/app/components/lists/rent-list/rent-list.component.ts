@@ -74,13 +74,12 @@ export class RentListComponent implements OnInit {
 
     if (this.userType === "ROLE_USER") {
       this.header = [
-        {key: "id", label: "Id"},
         {key: "vehicle", label: "Vehicle"}, {key: "startDate", label: "Start date"},
         {key: "endDate", label: "End date"}, {key: "approved", label: "Approved"}
       ];
     } else {
       this.header = [
-        {key: "id", label: "Id"},{key: "fullName", label: "User"},
+        {key: "fullName", label: "User"},
         {key: "vehicle", label: "Vehicle"}, {key: "startDate", label: "Start date"},
         {key: "endDate", label: "End date"}, {key: "approved", label: "Approved"}
       ];

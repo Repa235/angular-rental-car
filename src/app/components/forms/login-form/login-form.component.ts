@@ -15,16 +15,21 @@ export class LoginFormComponent implements OnInit {
   constructor(
     private userService: UserService,
     private router: Router,
-    private authService: AuthService
-  ) {}
+    private authService: AuthService,
+  ) {
+  }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   onLogin() {
     this.authService.login(this.username, this.password).subscribe(
-      token =>  console.log("User autenticated with token: ", token));
-  }
+      () => {
+        this.router.navigate(['/list/rent'])
 
+      }
+    );
+  }
 
 
 }

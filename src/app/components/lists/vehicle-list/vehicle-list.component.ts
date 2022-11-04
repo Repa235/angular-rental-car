@@ -55,7 +55,7 @@ export class VehicleListComponent implements OnInit {
     this.order = {defaultColumn: "id", orderType: "asc"}
     this.search = {columns: ["carBrand", "model", "type"]};
     this.pagination = {itemPerPage: 3, itemPerPageOptions: [3, 6, 9]};
-    this.header = [{key: "id", label: "Id"}, {key: "carBrand", label: "Car brand"}, {
+    this.header = [ {key: "carBrand", label: "Car brand"}, {
       key: "model",
       label: "Model"
     },
