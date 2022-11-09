@@ -93,8 +93,7 @@ export class RentFormComponent implements OnInit {
 
   modelChangeOnStartDate(value: any) {
     this.needToFindFreeVehicles=true
-    console.log("Start date inserted: ", value)
-    let message = "A reservation must be made at least two days before the start date";
+     let message = "A reservation must be made at least two days before the start date";
     if (!this.checkStartDate(value)) {
       this.startDateValidation=false
       if (!this.messages.includes(message)) {
@@ -117,7 +116,6 @@ export class RentFormComponent implements OnInit {
 
   modelChangeOnEndDate(value: any) {
     this.needToFindFreeVehicles=true
-    console.log("End date inserted: ", value)
     let message = "End date must be after start date, we can't travel in time";
     //if end date is before startdate
     if (moment(value).isBefore(this.startDate)) {

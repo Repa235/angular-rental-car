@@ -27,6 +27,14 @@ export class MyTableComponent implements OnInit, OnChanges {
   arrayPages!: number[];
   action = MyTableActionEnum;
 
+
+  //array4pag
+  buttonPageArray: number[] = []
+
+  //4Search
+  column4Search: any;
+  text4Search: any;
+
   @Output() outputTab = new EventEmitter();
 
   constructor() {
@@ -34,8 +42,7 @@ export class MyTableComponent implements OnInit, OnChanges {
 
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes)
-    if(changes && changes['data']) {
+    if (changes && changes['data']) {
       this.initData()
     }
   }
@@ -50,8 +57,18 @@ export class MyTableComponent implements OnInit, OnChanges {
     this.numberItem4Page = this.tableConfig.pagination.itemPerPage;
     this.maxPage = Number((this.data.length / this.numberItem4Page).toFixed())
     this.arrayPages = Array.from({length: this.maxPage}, (_, i) => i + 1)
+    this.calculatePageArray()
   }
 
+  calculatePageArray() {
+    if (this.numPageSelected - 1 === 0) {
+      this.buttonPageArray = [this.numPageSelected, this.numPageSelected + 1]
+    } else if (this.numPageSelected + 1 === this.arrayPages.length + 1) {
+      this.buttonPageArray = [this.numPageSelected - 1, this.numPageSelected]
+    } else {
+      this.buttonPageArray = [this.numPageSelected - 1, this.numPageSelected, this.numPageSelected + 1]
+    }
+  }
 
   changeItemPerPage(numberItem4Page: any) {
     this.numPageSelected = 1
@@ -61,33 +78,27 @@ export class MyTableComponent implements OnInit, OnChanges {
   }
 
 
-  searchText(searchedText: any, filter: any) {
-    this.numPageSelected = 1
-    let s = searchedText.value.trim()
-    if (s.length !== 0) {
-      this.data = _.filter(
-        this.data, function (o) {
-          return o[filter].toLowerCase().includes(s.toLowerCase());
-        }
-      )
+  prevPage() {
+    if (this.numPageSelected - 1 > 0) {
+      this.numPageSelected = this.numPageSelected - 1
+      this.calculatePageArray()
     } else {
-      this.data = this.dataBackup
+      window.alert("You are at page 0")
     }
   }
 
-  prevPage() {
-    if (this.numPageSelected >= 2)
-      this.numPageSelected = this.numPageSelected - 1
-  }
-
   nextPage() {
-    if (this.numPageSelected < this.maxPage)
+    if (this.numPageSelected + 1 < this.arrayPages.length + 1) {
       this.numPageSelected = this.numPageSelected + 1
+      this.calculatePageArray()
+    } else {
+      window.alert("Max page reached")
+    }
   }
 
   goToPage(numPageSelected: number) {
-    if (this.numPageSelected !== numPageSelected)
-      this.numPageSelected = numPageSelected
+    this.numPageSelected = numPageSelected
+    this.calculatePageArray()
   }
 
   searchPage(pageToSearch: any) {
@@ -107,7 +118,7 @@ export class MyTableComponent implements OnInit, OnChanges {
     this.outputTab.emit({action: action, row: row})
   }
 
-  getValue(key: string, obj: any):string{
+  getValue(key: string, obj: any): string {
     return _.get(obj, key);
   }
 

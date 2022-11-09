@@ -26,6 +26,7 @@ import {RouteGuardService} from "./services/route-guard.service";
 import {Roles} from "./models/roles";
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import {NetworkInterceptor} from "./interceptors/network.interceptor";
+import { SearchPipe } from './components/templates/my-table/pipes/search.pipe';
 
 
 
@@ -48,7 +49,8 @@ import {NetworkInterceptor} from "./interceptors/network.interceptor";
     UserListComponent,
     VehicleListComponent,
     RentListComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    SearchPipe
   ],
   imports: [
     BrowserModule,

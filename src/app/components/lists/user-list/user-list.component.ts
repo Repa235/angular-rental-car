@@ -8,6 +8,7 @@ import {MyHeaders} from "../../templates/my-table/config/MyHeaders";
 import {MyOrder} from "../../templates/my-table/config/MyOrder";
 import {Router} from "@angular/router";
 import {AuthService} from "../../../services/auth.service";
+import {actionButtons, header, order, search, pagination} from "./user-list-config";
 
 @Component({
   selector: 'app-user-list',
@@ -30,21 +31,26 @@ export class UserListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUsers();
-    this.userType=this.authService.getRole()
+    this.userType = this.authService.getRole()
 
-    this.actionButtons = [
-      {text: 'Edit', buttonTop: false, customClass: 'btn btn-outline-secondary princButton', typeOfEntity: 'user'},
-      {text: 'Delete', buttonTop: false, customClass: 'btn btn-outline-secondary princButton', typeOfEntity: 'user'},
-      {text: 'Add', buttonTop: true, customClass: 'btn btn-outline-secondary princButton', typeOfEntity: 'user'}]
- if(this.userType==="ROLE_ADMIN"){this.actionButtons.push( {text: 'See rents', buttonTop: false, customClass: 'btn btn-outline-secondary princButton', typeOfEntity: 'user'})}
+    this.actionButtons = actionButtons
+    if (this.userType === "ROLE_ADMIN") {
+      this.actionButtons.push({
+        text: 'See rents',
+        buttonTop: false,
+        customClass: 'btn btn-outline-secondary princButton',
+        typeOfEntity: 'user'
+      })
+    }
 
-    this.order = {defaultColumn: "id", orderType: "asc"}
-    this.search = {columns: ["id", "name", "surname"]};
-    this.pagination = { itemPerPage: 3, itemPerPageOptions: [3, 6, 9] };
-    this.header = [{key: "name", label: "Name"}, {key: "surname", label: "Surname"},
-      {key: "birthday", label: "Birthday"} ];
-    this.tableconfig = { headers: this.header, search: this.search, order: this.order,
-      pagination:this.pagination, actions:this.actionButtons }
+    this.order = order
+    this.search = search
+    this.pagination = pagination
+    this.header = header
+    this.tableconfig = {
+      headers: this.header, search: this.search, order: this.order,
+      pagination: this.pagination, actions: this.actionButtons
+    }
   }
 
   getUsers(): void {
@@ -55,24 +61,20 @@ export class UserListComponent implements OnInit {
   getAction(action: MyActions, row: any) {
     switch (action.text) {
       case "Add":
-        console.log('Add ' + action.typeOfEntity + ' ' + row.id)
-        this.router.navigate(['form/user'])
+         this.router.navigate(['form/user'])
         break;
 
       case "Edit":
-        console.log('Edit ' + action.typeOfEntity + ' ' + row.id)
-        this.router.navigate(['form/user', row.id])
+         this.router.navigate(['form/user', row.id])
         break;
 
       case "See rents":
-        console.log('See rents of ' + action.typeOfEntity + ' ' + row.id)
         this.router.navigate(['list/rentOf/' + row.id])
         break;
 
       case "Delete":
-        console.log('Delete ' + action.typeOfEntity + ' ' + row.id)
-        this.users = this.users.filter(users => users !== row);
-        this.userService.deleteUser(row.id).subscribe();
+         this.users = this.users.filter(users => users !== row);
+        this.userService.deleteUser(row.id).subscribe((newList) => this.users = newList);
     }
   }
 

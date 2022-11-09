@@ -10,6 +10,7 @@ import {logMessages} from "@angular-devkit/build-angular/src/builders/browser-es
 import {Router} from "@angular/router";
 import {Roles} from "../../../models/roles";
 import {AuthService} from "../../../services/auth.service";
+import {actionButtons, order, search, header, pagination} from "./vehicle-list-config";
 
 @Component({
   selector: 'app-vehicle-list',
@@ -35,31 +36,15 @@ export class VehicleListComponent implements OnInit {
     this.userType = this.authService.getRole()
 
     if (this.userType === 'ROLE_ADMIN') {
-      this.actionButtons = [{
-        text: 'Edit',
-        buttonTop: false,
-        customClass: 'btn btn-outline-secondary princButton',
-        typeOfEntity: 'vehicle'
-      },
-        {
-          text: 'Delete',
-          buttonTop: false,
-          customClass: 'btn btn-outline-secondary princButton',
-          typeOfEntity: 'vehicle'
-        },
-        {text: 'Add', buttonTop: true, customClass: 'btn btn-outline-secondary princButton', typeOfEntity: 'vehicle'}]
+      this.actionButtons = actionButtons
     } else {
       this.actionButtons = []
     }
 
-    this.order = {defaultColumn: "id", orderType: "asc"}
-    this.search = {columns: ["carBrand", "model", "type"]};
-    this.pagination = {itemPerPage: 3, itemPerPageOptions: [3, 6, 9]};
-    this.header = [ {key: "carBrand", label: "Car brand"}, {
-      key: "model",
-      label: "Model"
-    },
-      {key: "registrationYear", label: "Year of registration"}, {key: "type", label: "Type"}];
+    this.order = order
+    this.search = search
+    this.pagination = pagination
+    this.header = header
 
     this.tableconfig = {
       headers: this.header, order: this.order, search: this.search, pagination: this.pagination,
@@ -76,19 +61,16 @@ export class VehicleListComponent implements OnInit {
   getAction(action: MyActions, row: any) {
     switch (action.text) {
       case "Add":
-        console.log('Add ' + action.typeOfEntity + ' ' + row.id)
         this.router.navigate(['form/vehicle'])
         break;
 
       case "Edit":
-        console.log('Edit ' + action.typeOfEntity + ' ' + row.id)
         this.router.navigate(['form/vehicle', row.id])
         break;
 
       case "Delete":
-        console.log('Delete ' + action.typeOfEntity + ' ' + row.id)
-        this.vehicles = this.vehicles.filter(vehicle => vehicle !== row);
-        this.vehicleService.deleteVehicle(row.id).subscribe();
+         this.vehicles = this.vehicles.filter(vehicle => vehicle !== row);
+        this.vehicleService.deleteVehicle(row.id).subscribe((newList) => this.vehicles=newList);
 
 
     }

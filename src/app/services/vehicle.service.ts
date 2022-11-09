@@ -40,7 +40,6 @@ export class VehicleService {
   }
 
   getVehicles(): Observable<Vehicle[]> {
-    console.log('Inizio la chiamata')
     return this.http.get<Vehicle[]>(this.vehicleURL)
       .pipe(
         tap(_ => this.log('fetched vehicles')),
@@ -86,11 +85,11 @@ export class VehicleService {
   }
 
   /** DELETE: delete the Vehicle from the server */
-  deleteVehicle(id: number): Observable<Vehicle> {
+  deleteVehicle(id: number): Observable<Vehicle[]> {
     const url = `${this.vehicleURL}/remove/${id}`;
-    return this.http.delete<Vehicle>(url, this.httpOptions).pipe(
+    return this.http.delete<Vehicle[]>(url, this.httpOptions).pipe(
       tap(_ => this.log(`deleted Vehicle id=${id}`)),
-      catchError(this.handleError<Vehicle>('deleteVehicle'))
+      catchError(this.handleError<Vehicle[]>('deleteVehicle'))
     );
   }
 }

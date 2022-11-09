@@ -41,8 +41,7 @@ export class UserService {
   }
 
   getUsers(): Observable<User[]> {
-    console.log('Users: ',this.http.get<User[]>(this.usersURL))
-    return this.http.get<User[]>(this.usersURL)
+     return this.http.get<User[]>(this.usersURL)
       .pipe(
         tap(_ => this.log('fetched users')),
         catchError(this.handleError<User[]>('getUsers', []))
@@ -77,11 +76,11 @@ export class UserService {
   }
 
   /** DELETE: delete the hero from the server */
-  deleteUser(id: number): Observable<User> {
+  deleteUser(id: number): Observable<User[]> {
     const url = `${this.usersURL}/remove/${id}`;
-    return this.http.delete<User>(url, this.httpOptions).pipe(
+    return this.http.delete<User[]>(url, this.httpOptions).pipe(
       tap(_ => this.log(`deleted user id=${id}`)),
-      catchError(this.handleError<User>('deleteUser'))
+      catchError(this.handleError<User[]>('deleteUser'))
     );
   }
 

@@ -38,7 +38,6 @@ export class UserFormComponent implements OnInit {
         this.user.password=null
       });
     }
-    console.log('Utente trovato')
   }
 
   addOrUpdateUser (userForm: any) {

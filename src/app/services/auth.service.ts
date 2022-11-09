@@ -43,7 +43,6 @@ export class AuthService {
   login(username: string, password: string) {
     return this.http.post<Token>(this.authURL, {username: username, password: password}, this.httpOptions).pipe(
       map(data => {
-        console.log(data)
         sessionStorage.setItem("token", "Bearer " + data.token);
         sessionStorage.setItem("role", data.role)
         sessionStorage.setItem("userid", data.userid)
@@ -73,7 +72,6 @@ export class AuthService {
   }
 
   logout() {
-    console.log('Token removed')
     sessionStorage.removeItem('token')
     sessionStorage.removeItem('userid')
     sessionStorage.removeItem("isLogged")

@@ -86,6 +86,7 @@ export class RentService {
     );
   }
 
+
   /** DELETE: delete the hero from the server */
   approveRent(id: number): Observable<Rent> {
     const url = `${this.rentsURL}/approve/${id}`;

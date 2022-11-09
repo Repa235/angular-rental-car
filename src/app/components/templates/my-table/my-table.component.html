@@ -1,11 +1,12 @@
 <!-- INPUT GROUP -->
 <div class="input-group mx-auto">
   <span class="input-group-text">Filter by:</span>
-  <select class="form-select" #column>
+  <select class="form-select" [(ngModel)]="column4Search">
     <option *ngFor="let column of tableConfig.search.columns">{{column}}</option>
   </select>
   <span class="input-group-text">Text to search:</span>
-  <input type="text" class="form-control" (keyup)="searchText($event.target, column.value)">
+  <input type="text" class="form-control" [(ngModel)]="text4Search">
+  <!-- (keyup)="searchText($event.target, column.value)" -->
   <ng-container *ngFor="let action of tableConfig.actions">
     <app-my-button *ngIf="action.buttonTop===true" (click)="clickButton(action,0)"
                    [buttonConfig]=
@@ -22,24 +23,24 @@
       {{header.label}}
       <i [ngClass]="[orderType === 'asc' ? 'fa fa-arrow-up' : 'fa fa-arrow-down']"></i>
     </th>
-    <ng-container *ngFor="let action of tableConfig.actions" >
-    <th *ngIf="action.buttonTop===false" scope="col" style="width: 80px">
+    <ng-container *ngFor="let action of tableConfig.actions">
+      <th *ngIf="action.buttonTop===false" scope="col" style="width: 80px">
 
-    </th>
+      </th>
     </ng-container>
   </tr>
   </thead>
   <tbody>
   <tr
-    *ngFor="let row of data  | pagination :numPageSelected:numberItem4Page | sortPipe : key:  orderType ">
+    *ngFor="let row of data  | pagination :numPageSelected:numberItem4Page | sortPipe : key:  orderType | search : text4Search : column4Search  ">
     <th scope="row" *ngFor="let header of tableConfig.headers">{{getValue(header.key, row)}}</th>
-    <ng-container *ngFor="let action of tableConfig.actions" >
-        <th scope="row" *ngIf="action.buttonTop===false" >
-          <app-my-button [buttonConfig]=
-                           "{customCssClass:action.customClass,text:action.text, icon:action.icon}"
-                         (click)="clickButton(action,row)">
-          </app-my-button>
-        </th>
+    <ng-container *ngFor="let action of tableConfig.actions">
+      <th scope="row" *ngIf="action.buttonTop===false">
+        <app-my-button [buttonConfig]=
+                         "{customCssClass:action.customClass,text:action.text, icon:action.icon}"
+                       (click)="clickButton(action,row)">
+        </app-my-button>
+      </th>
     </ng-container>
   </tr>
   </tbody>
@@ -53,52 +54,22 @@
       <option *ngFor="let number of tableConfig.pagination.itemPerPageOptions">{{number}}</option>
     </select>
   </div>
+
+
   <div class="btn-group" role="group" aria-label="First group" style="margin-left: 2%">
     <app-my-button (click)="prevPage()"
                    [buttonConfig]=
                      "{customCssClass:'btn btn-outline-secondary capsuleSx',text:'', icon:'fa fa-arrow-left'}">
     </app-my-button>
-    <ng-container *ngIf="arrayPages.length>1">
-      <app-my-button (click)="goToPage(arrayPages[0])"
-                     *ngIf="numPageSelected>=3"
-                     [buttonConfig]=
-                       "{customCssClass:'btn btn-outline-secondary capsuleCenter',text:'First', icon:undefined}">
-      </app-my-button>
-      <app-my-button (click)="goToPage(numPageSelected-2)"
-                     *ngIf="numPageSelected>=3"
-                     [buttonConfig]=
-                       "{customCssClass:'btn btn-outline-secondary capsuleCenter',text:'...', icon:undefined}">
-      </app-my-button>
-      <app-my-button (click)="goToPage(numPageSelected-1)"
-                     *ngIf="numPageSelected>1"
-                     [buttonConfig]=
-                       "{customCssClass:'btn btn-outline-secondary capsuleCenter',text:(numPageSelected-1).toString()
-                       , icon:undefined}">
-      </app-my-button>
-      <app-my-button [buttonConfig]=
-                       "{customCssClass:'btn btn-secondary capsuleCenter',text:(numPageSelected).toString()
-                       , icon:undefined}">
-      </app-my-button>
-      <app-my-button *ngIf="numPageSelected<maxPage"
-                     (click)="goToPage(numPageSelected+1)"
-                     [buttonConfig]=
-                       "{customCssClass:'btn btn-outline-secondary capsuleCenter',text:(numPageSelected+1).toString()
-                       , icon:undefined}">
-      </app-my-button>
-      <app-my-button
-        *ngIf="maxPage>=5 && numPageSelected+2<=maxPage && numPageSelected+1<=maxPage && numPageSelected<maxPage"
-        (click)="goToPage(numPageSelected+2)"
-        [buttonConfig]=
-          "{customCssClass:'btn btn-outline-secondary capsuleCenter',text:'...'
-                       , icon:undefined}">
-      </app-my-button>
-      <app-my-button *ngIf="numPageSelected<=maxPage-1"
-                     (click)="goToPage(arrayPages[maxPage-1])"
-                     [buttonConfig]=
-                       "{customCssClass:'btn btn-outline-secondary capsuleCenter',text:'Last'
-                       , icon:undefined}">
-      </app-my-button>
-    </ng-container>
+
+    <app-my-button *ngFor="let np of buttonPageArray"
+                   (click)="goToPage(np)"
+                   [buttonConfig]=
+                     " np === numPageSelected ? {customCssClass:'btn btn-secondary capsuleCenter',text:np.toString(), icon:''}
+                     : {customCssClass:'btn btn-outline-secondary capsuleCenter',text:np.toString(), icon:''}">
+
+    </app-my-button>
+
     <app-my-button (click)="nextPage()"
                    [buttonConfig]=
                      "{customCssClass:'btn btn-outline-secondary capsuleDx',text:'', icon:'fa fa-arrow-right'}">

@@ -11,6 +11,14 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {Rent} from "../../../models/rent";
 import {AuthService} from "../../../services/auth.service";
 import * as moment from "moment/moment";
+import {
+  actionButtons4SuperUser,
+  actionButtons4User,
+  header4SuperUser,
+  header4User,
+  order, pagination,
+  search
+} from "./rent-list-config";
 
 @Component({
   selector: 'app-rent-list',
@@ -48,46 +56,38 @@ export class RentListComponent implements OnInit {
       this.userId = this.authService.getUserId()
     }
 
-    if (this.userId) {
-      var userId = parseInt(this.userId, 10)
-      this.getRentsOf(userId)
-    } else {
-      this.getRents()
-    }
+    this.getRentsSpecific()
 
 
     if (this.userType === "ROLE_USER") {
-      this.actionButtons = [
-        {text: 'Edit', buttonTop: false, customClass: 'btn btn-outline-secondary princButton', typeOfEntity: 'rent'},
-        {text: 'Delete', buttonTop: false, customClass: 'btn btn-outline-secondary princButton', typeOfEntity: 'rent'},
-        {text: 'Add', buttonTop: true, customClass: 'btn btn-outline-secondary princButton', typeOfEntity: 'rent'}]
+      this.actionButtons = actionButtons4User
     } else {
-      this.actionButtons = [
-        {text: 'Delete', buttonTop: false, customClass: 'btn btn-outline-secondary princButton', typeOfEntity: 'rent'},
-        {text: 'Approve', buttonTop: false, customClass: 'btn btn-outline-secondary princButton', typeOfEntity: 'rent'}]
+      this.actionButtons = actionButtons4SuperUser
     }
-    this.order = {defaultColumn: "id", orderType: "asc"}
+    this.order = order
 
-    this.search = {columns: ["startDate", "endDate", "vehicle"]};
+    this.search = search
 
-    this.pagination = {itemPerPage: 3, itemPerPageOptions: [3, 6, 9]};
+    this.pagination = pagination
 
     if (this.userType === "ROLE_USER") {
-      this.header = [
-        {key: "vehicle", label: "Vehicle"}, {key: "startDate", label: "Start date"},
-        {key: "endDate", label: "End date"}, {key: "approved", label: "Approved"}
-      ];
+      this.header = header4User
     } else {
-      this.header = [
-        {key: "fullName", label: "User"},
-        {key: "vehicle", label: "Vehicle"}, {key: "startDate", label: "Start date"},
-        {key: "endDate", label: "End date"}, {key: "approved", label: "Approved"}
-      ];
+      this.header = header4SuperUser
     }
 
     this.tableconfig = {
       headers: this.header, order: this.order, search: this.search, pagination: this.pagination,
       actions: this.actionButtons
+    }
+  }
+
+  getRentsSpecific(): void {
+    if (this.userId) {
+      var userId = parseInt(this.userId, 10)
+      this.getRentsOf(userId)
+    } else {
+      this.getRents()
     }
   }
 
@@ -99,7 +99,6 @@ export class RentListComponent implements OnInit {
           r.vehicle = r.vehicleDto.carBrand + " " + r.vehicleDto.model;
         })
         this.rents = rents
-        console.log("fullnames", rents)
       })
 
   }
@@ -112,7 +111,6 @@ export class RentListComponent implements OnInit {
         r.vehicle = r.vehicleDto.carBrand + " " + r.vehicleDto.model;
       })
       this.rents = rents
-      console.log("fullnames", rents)
 
     }))
   }
@@ -121,14 +119,11 @@ export class RentListComponent implements OnInit {
   getAction(action: MyActions, row: any) {
     switch (action.text) {
       case "Add":
-        console.log('Add ' + action.typeOfEntity + ' ' + row.id)
         this.router.navigate(['form/rent'])
         break;
 
       case "Edit":
-        console.log('Edit ' + action.typeOfEntity + ' ' + row.id)
-        console.log("CDTA: " + this.canDoThisAction(row.startDate))
-        if (this.canDoThisAction(row.startDate)) {
+         if (this.canDoThisAction(row.startDate)) {
           this.router.navigate(['form/rent', row.id])
         } else {
           window.alert("This rent is expired");
@@ -137,9 +132,8 @@ export class RentListComponent implements OnInit {
 
       case "Delete":
         if (this.canDoThisAction(row.startDate)) {
-          console.log('Delete ' + action.typeOfEntity + ' ' + row.id)
           this.rents = this.rents.filter(rent => rent !== row);
-          this.rentService.deleteRent(row.id).subscribe();
+          this.rentService.deleteRent(row.id).subscribe(this.getRentsSpecific);
         } else {
           window.alert("This rent is expired");
         }
@@ -147,14 +141,11 @@ export class RentListComponent implements OnInit {
 
       case "Approve":
         if (this.canDoThisAction(row.startDate)) {
-          console.log('Approve ' + action.typeOfEntity + ' ' + row.id)
-          this.rentService.approveRent(row.id).subscribe()
+           this.rentService.approveRent(row.id).subscribe()
         } else {
           window.alert("This rent is expired");
         }
         break;
-
-
     }
   }
 
