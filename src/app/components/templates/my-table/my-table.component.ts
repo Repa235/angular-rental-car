@@ -83,7 +83,7 @@ export class MyTableComponent implements OnInit, OnChanges {
       this.numPageSelected = this.numPageSelected - 1
       this.calculatePageArray()
     } else {
-      window.alert("You are at page 0")
+      window.alert("You are at first page")
     }
   }
 
