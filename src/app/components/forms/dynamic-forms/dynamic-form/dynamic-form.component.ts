@@ -1,13 +1,16 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import {Component, Input, OnInit} from '@angular/core';
+import {FormGroup} from '@angular/forms';
 
-import { QuestionBase} from "../question/question-base";
-import { QuestionControlService} from "../question/question-control.service";
+import {QuestionBase} from "../question/question-base";
+import {QuestionControlService} from "../question/question-control.service";
+import {Vehicle} from "../../../../models/vehicle";
+import {VehicleService} from "../../../../services/vehicle.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-dynamic-form',
   templateUrl: './dynamic-form.component.html',
-  providers: [ QuestionControlService ]
+  providers: [QuestionControlService]
 })
 export class DynamicFormComponent implements OnInit {
 
@@ -15,13 +18,31 @@ export class DynamicFormComponent implements OnInit {
   form!: FormGroup;
   payLoad = '';
 
-  constructor(private qcs: QuestionControlService) {}
+  constructor(
+    private vehicleService: VehicleService,
+    private qcs: QuestionControlService,
+    private router: Router
+  ) {
+  }
 
   ngOnInit() {
     this.form = this.qcs.toFormGroup(this.questions as QuestionBase<string>[]);
   }
 
   onSubmit() {
-    this.payLoad = JSON.stringify(this.form.getRawValue());
+    let obj = this.form.getRawValue()
+    switch (this.form.getRawValue()['entityType']) {
+      case "vehicle":
+        var v: Vehicle = {
+          id: obj.id, carBrand: obj.carBrand, model: obj.model, type: obj.type, rents: undefined,
+          registrationYear: obj.registrationYear
+        }
+        if (obj.id) {
+          this.vehicleService.addVehicle(v).subscribe((() => this.router.navigate(['/list/vehicle'])))
+        } else {
+          this.vehicleService.updateVehicle(v).subscribe((() => this.router.navigate(['/list/vehicle'])))
+        }
+
+    }
   }
 }

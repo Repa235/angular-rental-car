@@ -12,9 +12,10 @@ import {environment} from "../../environments/environment";
 })
 export class VehicleService {
 
-  vehicleURL = environment.apiURI+'/api/vehicle'
+  vehicleURL = environment.apiURI + '/api/vehicle'
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
 
   private log(message: string) {
@@ -52,16 +53,22 @@ export class VehicleService {
     const url = `${this.vehicleURL}/get/${id}`;
     return this.http.get<Vehicle>(url)
       .pipe(
-      tap(_ => this.log(`fetched vehicle id=${id}`)),
-      catchError(this.handleError<Vehicle>(` id=${id}`))
-    );
+        tap(_ => this.log(`fetched vehicle id=${id}`)),
+        catchError(this.handleError<Vehicle>(` id=${id}`))
+      );
+  }
+
+  retVehicle(id: number): Vehicle {
+    let v: any = {}
+    this.getVehicle(id).subscribe(res => v=res)
+    return v
   }
 
   /** GET vehicle by id. Will 404 if id not found */
   getFreeVehicles(dates: any): Observable<Vehicle[]> {
     const url = `${this.vehicleURL}/free`;
-    return this.http.post<Vehicle[]>(url,dates, this.httpOptions)
-      .pipe(tap((_=>this.log("Veicoli trovati"))),
+    return this.http.post<Vehicle[]>(url, dates, this.httpOptions)
+      .pipe(tap((_ => this.log("Veicoli trovati"))),
         catchError(this.handleError<Vehicle[]>('!??')
         ));
   }
@@ -69,7 +76,7 @@ export class VehicleService {
   /** POST: add a new Vehicle to the server */
   addVehicle(vehicle: Vehicle): Observable<Vehicle> {
     this.log('Adding vehicle: ' + vehicle.carBrand + '' + vehicle.model)
-    return this.http.post<Vehicle>(this.vehicleURL+"/addOrUpdate", vehicle, this.httpOptions).pipe(
+    return this.http.post<Vehicle>(this.vehicleURL + "/addOrUpdate", vehicle, this.httpOptions).pipe(
       tap((newVehicle: Vehicle) => this.log(`added Vehicle w/ id=${newVehicle.id}`)),
       catchError(this.handleError<Vehicle>('addVehicle'))
     );
@@ -78,7 +85,7 @@ export class VehicleService {
 
   /** PUT: update the Vehicle on the server */
   updateVehicle(vehicle: Vehicle): Observable<any> {
-    return this.http.put(this.vehicleURL+"/addOrUpdate", vehicle, this.httpOptions).pipe(
+    return this.http.put(this.vehicleURL + "/addOrUpdate", vehicle, this.httpOptions).pipe(
       tap(_ => this.log(`updated Vehicle id=${vehicle.id}`)),
       catchError(this.handleError<any>('updateVehicle'))
     );

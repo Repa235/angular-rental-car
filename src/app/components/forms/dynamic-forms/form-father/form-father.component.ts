@@ -13,7 +13,7 @@ export class FormFatherComponent implements OnInit {
   questions$: Observable<QuestionBase<any>[]>;
 
   constructor(service: QuestionService) {
-    this.questions$ = service.getQuestions();
+    this.questions$ = service.getQuestionsForVehicle();
   }
 
   ngOnInit(): void {

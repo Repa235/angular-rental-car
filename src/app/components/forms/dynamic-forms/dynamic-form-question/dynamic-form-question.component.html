@@ -1,22 +1,22 @@
 <div [formGroup]="form">
   <label class="form-label" [attr.for]="question.key">{{question.label}}</label>
-
   <div [ngSwitch]="question.controlType">
 
     <input *ngSwitchCase="'textbox'" [formControlName]="question.key"
-           [id]="question.key" [type]="question.type" [class]="question.class">
+           [id]="question.key" [type]="question.type" [class]="question.class" [value]="obj[question.key]" >
 
     <input *ngSwitchCase="'number'" [formControlName]="question.key"
-           [id]="question.key" [type]="question.type" [class]="question.class">
+           [id]="question.key" [type]="question.type" [class]="question.class" [value]="obj[question.key]">
 
     <input *ngSwitchCase="'date'" [formControlName]="question.key"
-           [id]="question.key" [type]="question.type" [class]="question.class">
+           [id]="question.key" [type]="question.type" [class]="question.class" [value]="obj[question.key]">
 
-    <select [id]="question.key" *ngSwitchCase="'dropdown'" [formControlName]="question.key" [class]="question.class">
+    <select [id]="question.key" *ngSwitchCase="'dropdown'" [formControlName]="question.key" [class]="question.class"
+            [value]="obj[question.key]">
       <option *ngFor="let opt of question.options" [value]="opt.key">{{opt.value}}</option>
     </select>
 
   </div>
 
-  <div class="errorMessage" *ngIf="!isValid">{{question.label}} is required</div>
+  <!-- <div class="errorMessage" *ngIf="!isValid">{{question.label}} is required</div> -->
 </div>
