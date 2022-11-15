@@ -6,6 +6,10 @@ import { HomepageComponent } from './components/homepage/homepage.component';
 import { HeaderComponent } from './components/templates/my-header/header.component';
 import { MyFooterComponent } from './components/templates/my-footer/my-footer.component';
 
+import { ReactiveFormsModule } from '@angular/forms';
+import { DynamicFormComponent} from "./components/forms/dynamic-forms/dynamic-form/dynamic-form.component";
+import { DynamicFormQuestionComponent } from './components/forms/dynamic-forms/dynamic-form-question/dynamic-form-question.component';
+
 
 import { RouterModule } from '@angular/router';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
@@ -27,14 +31,13 @@ import {Roles} from "./models/roles";
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import {NetworkInterceptor} from "./interceptors/network.interceptor";
 import { SearchPipe } from './components/templates/my-table/pipes/search.pipe';
-
-
-
+import { FormFatherComponent } from './components/forms/dynamic-forms/form-father/form-father.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    DynamicFormComponent, DynamicFormQuestionComponent,
     HomepageComponent,
     HeaderComponent,
     MyFooterComponent,
@@ -50,12 +53,15 @@ import { SearchPipe } from './components/templates/my-table/pipes/search.pipe';
     VehicleListComponent,
     RentListComponent,
     SpinnerComponent,
-    SearchPipe
+    SearchPipe,
+    FormFatherComponent
   ],
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
     RouterModule.forRoot([
       {path: 'homepage', component: HomepageComponent},
+      {path: 'form/father', component: FormFatherComponent},
 
       {path: 'form/rent', component: RentFormComponent,  canActivate: [RouteGuardService],
         data: {roles: [Roles.user,Roles.admin]}},

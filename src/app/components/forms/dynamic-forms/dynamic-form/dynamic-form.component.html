@@ -1,0 +1,23 @@
+<div class="container my-5 mx-auto">
+  <h2 style="margin-bottom: 2%">Form title</h2>
+  <div class="row p-4 pb-0 pe-lg-0 pt-lg-5  align-items-center rounded-3 border shadow-lg">
+    <form (ngSubmit)="onSubmit()" [formGroup]="form">
+
+      <div *ngFor="let question of questions" class="input-group mb-3">
+        <app-question [question]="question" [form]="form"></app-question>
+      </div>
+
+      <div class="input-group mb-3">
+        <app-my-button
+                       [buttonConfig]=
+                         "{customCssClass:'btn btn-outline-secondary',text:'Submit', icon:''}">
+        </app-my-button>
+      </div>
+    </form>
+
+    <div *ngIf="payLoad" class="form-row">
+      <strong>Saved the following values</strong><br>{{payLoad}}
+    </div>
+  </div>
+</div>
+
