@@ -25,16 +25,7 @@ export class QuestionService {
 
   getQuestionsForVehicle() {
     const questions: QuestionBase<string>[] = [
-      new HiddenQuestion({
-        key: 'id',
-        value: '',
-        required: true,
-      }),
-      new HiddenQuestion({
-        key: 'entityType',
-        value: 'vehicle',
-        required: true,
-      }),
+
       new TextboxQuestion({
         key: 'carBrand',
         label: 'Car Brand',
@@ -73,10 +64,106 @@ export class QuestionService {
           {key: 'Familiar',   value: 'Familiar'},
           {key: 'VAN', value: 'VAN'}
         ],
-      })
+      }),
+      new HiddenQuestion({
+        key: 'id',
+        value: '',
+        required: true,
+      }),
+      new HiddenQuestion({
+        key: 'entityType',
+        value: 'vehicle',
+        required: true,
+      }),
     ]
     return of(questions.sort((a, b) => a.order - b.order));
   }
+
+  getQuestionsForUser() {
+    const questions: QuestionBase<string>[] = [
+
+      new TextboxQuestion({
+        key: 'name',
+        label: 'Name',
+        value: '',
+        class: 'form-control',
+        required: true,
+        controlType: 'text',
+        type: 'text',
+      }),
+      new TextboxQuestion({
+        key: 'surname',
+        label: 'Surname',
+        value: '',
+        class: 'form-control',
+        required: true,
+        controlType: 'text',
+        type: 'text',
+      }),
+      new DateQuestion({
+        key: 'birthday',
+        label: 'Birthday',
+        required: true,
+        class: 'form-control',
+        type: 'date',
+      }),
+      new TextboxQuestion({
+        key: 'username',
+        label: 'Username',
+        value: '',
+        class: 'form-control',
+        required: true,
+        controlType: 'text',
+        type: 'text',
+      }),
+      new TextboxQuestion({
+        key: 'password',
+        label: 'Password',
+        value: '',
+        class: 'form-control',
+        required: true,
+        controlType: 'text',
+        type: 'password',
+      }),
+      new HiddenQuestion({
+        key: 'id',
+        value: '',
+        required: true,
+      }),
+      new HiddenQuestion({
+        key: 'entityType',
+        value: 'user',
+        required: true,
+      }),
+    ]
+    return of(questions.sort((a, b) => a.order - b.order));
+  }
+
+  getQuestionsForRent() {
+    const questions: QuestionBase<string>[] = [
+
+
+      new DateQuestion({
+        key: 'startDate',
+        label: 'Start date',
+        required: true,
+        class: 'form-control',
+        type: 'date',
+      }),
+      new DateQuestion({
+        key: 'endDate',
+        label: 'End date',
+        required: true,
+        class: 'form-control',
+        type: 'date',
+      }),
+
+    ]
+    return of(questions.sort((a, b) => a.order - b.order));
+  }
+
+
+
 
 
 

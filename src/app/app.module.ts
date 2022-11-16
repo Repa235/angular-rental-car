@@ -62,6 +62,7 @@ import { FormFatherComponent } from './components/forms/dynamic-forms/form-fathe
     RouterModule.forRoot([
       {path: 'homepage', component: HomepageComponent},
       {path: 'form/father', component: FormFatherComponent},
+      {path: 'form/dy/:formCateg/:idObj', component: FormFatherComponent},
 
       {path: 'form/rent', component: RentFormComponent,  canActivate: [RouteGuardService],
         data: {roles: [Roles.user,Roles.admin]}},

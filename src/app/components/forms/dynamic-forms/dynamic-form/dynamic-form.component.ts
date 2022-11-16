@@ -37,11 +37,12 @@ export class DynamicFormComponent implements OnInit {
           id: obj.id, carBrand: obj.carBrand, model: obj.model, type: obj.type, rents: undefined,
           registrationYear: obj.registrationYear
         }
-        if (obj.id) {
+        console.log("Vehicle: " + JSON.stringify(v))
+        /*if (obj.id) {
           this.vehicleService.addVehicle(v).subscribe((() => this.router.navigate(['/list/vehicle'])))
         } else {
           this.vehicleService.updateVehicle(v).subscribe((() => this.router.navigate(['/list/vehicle'])))
-        }
+        }*/
 
     }
   }
