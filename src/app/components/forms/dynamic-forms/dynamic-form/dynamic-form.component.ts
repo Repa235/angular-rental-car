@@ -15,6 +15,8 @@ import {Router} from "@angular/router";
 export class DynamicFormComponent implements OnInit {
 
   @Input() questions: QuestionBase<string>[] | null = [];
+  @Input() idObj: number = 0;
+  @Input() typeObj: string = "";
   form!: FormGroup;
   payLoad = '';
 
@@ -27,6 +29,7 @@ export class DynamicFormComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.qcs.toFormGroup(this.questions as QuestionBase<string>[]);
+    console.log("dyn form comp"+this.idObj + " " + this.typeObj)
   }
 
   onSubmit() {

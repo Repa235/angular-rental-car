@@ -15,7 +15,8 @@ export class DynamicFormQuestionComponent implements OnInit {
 
   @Input() question!: QuestionBase<string>;
   @Input() form!: FormGroup;
-
+  @Input() idObj: number = 0;
+  @Input() typeObj: string = "";
 
   get isValid() {
     return this.form.controls[this.question.key].valid;
@@ -26,14 +27,17 @@ export class DynamicFormQuestionComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.questForVehicle(1)
+    console.log("dyn form quest comp"+this.idObj + " " + this.typeObj)
+    this.questForVehicle(this.idObj)
   }
 
 
   questForVehicle(id: number) {
+    console.log("id=" + id)
     if (id) {
       this.vehicleService.getVehicle(id).subscribe(v => {
         this.obj = v
+        console.log("v=" + JSON.stringify(v))
         this.form.patchValue({
           id: this.obj.id,
           carBrand: this.obj.carBrand,

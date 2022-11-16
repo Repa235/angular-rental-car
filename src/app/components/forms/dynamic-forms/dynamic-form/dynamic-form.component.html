@@ -4,7 +4,7 @@
     <form (ngSubmit)="onSubmit()" [formGroup]="form">
 
       <div *ngFor="let question of questions" class="input-group mb-3">
-        <app-question [question]="question" [form]="form"></app-question>
+        <app-question [question]="question" [form]="form" [idObj]="idObj" [typeObj]="typeObj"></app-question>
       </div>
 
       <div class="input-group mb-3">
