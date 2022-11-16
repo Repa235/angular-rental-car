@@ -6,6 +6,8 @@ import {QuestionControlService} from "../question/question-control.service";
 import {Vehicle} from "../../../../models/vehicle";
 import {VehicleService} from "../../../../services/vehicle.service";
 import {Router} from "@angular/router";
+import {User} from "../../../../models/user";
+import {UserService} from "../../../../services/user.service";
 
 @Component({
   selector: 'app-dynamic-form',
@@ -22,6 +24,7 @@ export class DynamicFormComponent implements OnInit {
 
   constructor(
     private vehicleService: VehicleService,
+    private userService: UserService,
     private qcs: QuestionControlService,
     private router: Router
   ) {
@@ -40,12 +43,23 @@ export class DynamicFormComponent implements OnInit {
           id: obj.id, carBrand: obj.carBrand, model: obj.model, type: obj.type, rents: undefined,
           registrationYear: obj.registrationYear
         }
-        console.log("Vehicle: " + JSON.stringify(v))
-        /*if (obj.id) {
+        if (obj.id) {
           this.vehicleService.addVehicle(v).subscribe((() => this.router.navigate(['/list/vehicle'])))
         } else {
           this.vehicleService.updateVehicle(v).subscribe((() => this.router.navigate(['/list/vehicle'])))
-        }*/
+        }
+        break;
+      case "user":
+        var u: User = {
+          id: obj.id, surname: obj.surname, rents: undefined, name:obj.name, birthday: obj.birthday,
+          password:obj.password, username:obj.username
+        }
+        if (obj.id) {
+          this.userService.addUser(u).subscribe((() => this.router.navigate(['/list/user'])))
+        } else {
+          this.userService.updateUser(u).subscribe((() => this.router.navigate([''])))
+        }
+        break;
 
     }
   }
