@@ -1,36 +1,7 @@
 <div class="container my-5 mx-auto">
   <h2 style="margin-bottom: 2%">Vehicle form</h2>
   <div class="row p-4 pb-0 pe-lg-0 pt-lg-5  align-items-center rounded-3 border shadow-lg">
-    <form #vehicleForm="ngForm" (ngSubmit)="addOrUpdateVehicle(vehicleForm.value)">
-      <div class="input-group mb-3">
-        <span class="input-group-text">Car brand</span>
-        <input type="text" class="form-control" name="carBrand" placeholder="Car brand"
-               [(ngModel)]="vehicle.carBrand" #carBrand="ngModel" required>
-
-        <span class="input-group-text">Model</span>
-        <input type="text" class="form-control" name="model" placeholder="Model"
-               [(ngModel)]="vehicle.model" #model="ngModel" required>
-
-      </div>
-      <div class="input-group mb-3">
-        <span class="input-group-text">Registration year</span>
-        <input type="number" class="form-control" name="registrationYear" placeholder="Registration year"
-               [(ngModel)]="vehicle.registrationYear">
-        <span class="input-group-text">Type</span>
-        <input type="text" class="form-control" name="type" placeholder="Type" [(ngModel)]="vehicle.type">
-      </div>
-      <input type="hidden" [(ngModel)]="vehicle.id" name="id" [value]="vehicle.id">
-      <div class="input-group mb-3">
-        <div class="col-auto">
-          <div *ngIf="(carBrand.errors?.['required'] && (carBrand.dirty || carBrand.touched))
-      ||
-      (model.errors?.['required']&& (model.dirty || model.touched))">
-            Car brand and model are required.
-          </div>
-          <button type="submit" class="btn btn-outline-primary" [disabled]="!vehicleForm.valid">Submit</button>
-        </div>
-      </div>
-    </form>
+    <app-dynamic-form [questionModels]="questionModels" (submitValue)="addOrUpdateVehicle($event)"></app-dynamic-form>
   </div>
 </div>
 

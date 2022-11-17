@@ -119,12 +119,12 @@ export class RentListComponent implements OnInit {
   getAction(action: MyActions, row: any) {
     switch (action.text) {
       case "Add":
-        this.router.navigate(['form/rent'])
+        this.router.navigate(['form/dy/rent'])
         break;
 
       case "Edit":
          if (this.canDoThisAction(row.startDate)) {
-          this.router.navigate(['form/rent', row.id])
+          this.router.navigate(['form/dy/rent', row.id])
         } else {
           window.alert("This rent is expired");
         }

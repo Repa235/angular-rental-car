@@ -6,12 +6,12 @@ import {TextboxQuestion} from './question-textbox';
 import {Observable, of} from 'rxjs';
 import {NumberQuestion} from "./question-number";
 import {DateQuestion} from "./question-date";
-import {HttpClient} from "@angular/common/http";
-import {VehicleService} from "../../../../services/vehicle.service";
-import {Vehicle} from "../../../../models/vehicle";
+
 import {HiddenQuestion} from "./question-hidden";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class QuestionService {
 
 
@@ -23,13 +23,13 @@ export class QuestionService {
 
   // TODO: get from a remote source of question metadata
 
-  getQuestionsForVehicle() {
+  getQuestionsForVehicle(vehicle?: any) {
     const questions: QuestionBase<string>[] = [
 
       new TextboxQuestion({
         key: 'carBrand',
         label: 'Car Brand',
-        value: '',
+        value: vehicle ? vehicle.carBrand : "",
         class: 'form-control',
         required: true,
         controlType: 'text',
@@ -76,7 +76,8 @@ export class QuestionService {
         required: true,
       }),
     ]
-    return of(questions.sort((a, b) => a.order - b.order));
+    //return of(questions.sort((a, b) => a.order - b.order));
+    return questions;
   }
 
   getQuestionsForUser() {
@@ -157,7 +158,21 @@ export class QuestionService {
         class: 'form-control',
         type: 'date',
       }),
-
+      new HiddenQuestion({
+        key: 'userDto',
+        value: '',
+        required: true,
+      }),
+      new HiddenQuestion({
+        key: 'id',
+        value: '',
+        required: true,
+      }),
+      new HiddenQuestion({
+        key: 'entityType',
+        value: 'rent',
+        required: true,
+      }),
     ]
     return of(questions.sort((a, b) => a.order - b.order));
   }

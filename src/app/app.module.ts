@@ -31,7 +31,7 @@ import {Roles} from "./models/roles";
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import {NetworkInterceptor} from "./interceptors/network.interceptor";
 import { SearchPipe } from './components/templates/my-table/pipes/search.pipe';
-import { FormFatherComponent } from './components/forms/dynamic-forms/form-father/form-father.component';
+
 
 
 @NgModule({
@@ -54,16 +54,14 @@ import { FormFatherComponent } from './components/forms/dynamic-forms/form-fathe
     RentListComponent,
     SpinnerComponent,
     SearchPipe,
-    FormFatherComponent
+
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
       {path: 'homepage', component: HomepageComponent},
-      {path: 'form/father', component: FormFatherComponent},
-      {path: 'form/dy/:formCateg/:idObj', component: FormFatherComponent},
-      {path: 'form/dy/:formCateg', component: FormFatherComponent},
+
 
       {path: 'form/rent', component: RentFormComponent,  canActivate: [RouteGuardService],
         data: {roles: [Roles.user,Roles.admin]}},
