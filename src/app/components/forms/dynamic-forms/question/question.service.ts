@@ -15,7 +15,6 @@ import {HiddenQuestion} from "./question-hidden";
 export class QuestionService {
 
 
-  vehicle: any = {}
 
   constructor() {
   }
@@ -29,45 +28,43 @@ export class QuestionService {
       new TextboxQuestion({
         key: 'carBrand',
         label: 'Car Brand',
-        value: vehicle ? vehicle.carBrand : "",
+        value: vehicle ? vehicle.carBrand : '',
         class: 'form-control',
         required: true,
-        controlType: 'text',
         type: 'text',
       }),
       new TextboxQuestion({
         key: 'model',
         label: 'Model',
-        value: '',
+        value: vehicle ? vehicle.model : '',
         class: 'form-control',
         required: true,
-        controlType: 'text',
         type: 'text',
       }),
       new NumberQuestion({
         key: 'registrationYear',
         label: 'Registration year',
-        value: '',
+        value: vehicle ? vehicle.registrationYear : '',
         class: 'form-control',
         required: true,
-        controlType: 'number',
         type: 'number',
       }),
       new DropdownQuestion({
         key: 'type',
         label: 'Type',
         class: 'form-control',
-        type: 'select',
+        type: 'form-select',
         options: [
           {key: 'Sedan',  value: 'Sedan'},
           {key: 'Coupe',  value: 'Coupe'},
           {key: 'Familiar',   value: 'Familiar'},
           {key: 'VAN', value: 'VAN'}
         ],
+        value: vehicle ? vehicle.type : ''
       }),
       new HiddenQuestion({
         key: 'id',
-        value: '',
+        value: vehicle ? vehicle.id : '',
         required: true,
       }),
       new HiddenQuestion({
