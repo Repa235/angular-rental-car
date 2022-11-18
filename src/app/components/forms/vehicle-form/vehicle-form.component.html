@@ -1,6 +1,7 @@
 <div class="container my-5 mx-auto">
   <h2 style="margin-bottom: 2%">Vehicle form</h2>
-    <app-dynamic-form *ngIf="questionModels&&questionModels.length>0" [questionModels]="questionModels" (submitValue)="addOrUpdateVehicle($event)"></app-dynamic-form>
+    <app-dynamic-form *ngIf="questionModels&&questionModels.length>0" [questionModels]="questionModels"
+                      (submitValue)="addOrUpdateVehicle($event)"></app-dynamic-form>
   </div>
 
 

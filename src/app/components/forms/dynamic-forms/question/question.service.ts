@@ -77,13 +77,13 @@ export class QuestionService {
     return questions;
   }
 
-  getQuestionsForUser() {
+  getQuestionsForUser(user?: any) {
     const questions: QuestionBase<string>[] = [
 
       new TextboxQuestion({
         key: 'name',
         label: 'Name',
-        value: '',
+        value: user ? user.name : '',
         class: 'form-control',
         required: true,
         controlType: 'text',
@@ -92,7 +92,7 @@ export class QuestionService {
       new TextboxQuestion({
         key: 'surname',
         label: 'Surname',
-        value: '',
+        value: user ? user.surname : '',
         class: 'form-control',
         required: true,
         controlType: 'text',
@@ -108,7 +108,7 @@ export class QuestionService {
       new TextboxQuestion({
         key: 'username',
         label: 'Username',
-        value: '',
+        value: user ? user.username : '',
         class: 'form-control',
         required: true,
         controlType: 'text',
@@ -125,7 +125,7 @@ export class QuestionService {
       }),
       new HiddenQuestion({
         key: 'id',
-        value: '',
+        value: user ? user.id : '',
         required: true,
       }),
       new HiddenQuestion({
@@ -134,7 +134,8 @@ export class QuestionService {
         required: true,
       }),
     ]
-    return of(questions.sort((a, b) => a.order - b.order));
+    //return of(questions.sort((a, b) => a.order - b.order));
+    return questions;
   }
 
   getQuestionsForRent() {

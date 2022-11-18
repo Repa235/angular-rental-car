@@ -3,6 +3,8 @@ import {User} from "../../../models/user";
 import {ActivatedRoute, Router} from "@angular/router";
 import {UserService} from "../../../services/user.service";
 import {AuthService} from "../../../services/auth.service";
+import {QuestionBase} from "../dynamic-forms/question/question-base";
+import {QuestionService} from "../dynamic-forms/question/question.service";
 
 @Component({
   selector: 'app-user-form',
@@ -13,12 +15,13 @@ export class UserFormComponent implements OnInit {
   user: any = {}
   idUser?: any
   userType!:string
-
+  questionModels: QuestionBase<string>[] = []
 
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,
     private authService: AuthService,
+    private qService: QuestionService,
     private router: Router) {}
 
   ngOnInit(): void {
@@ -34,9 +37,10 @@ export class UserFormComponent implements OnInit {
 
     if(this.idUser != null) {
       this.userService.getUser(this.idUser).subscribe((result: User) => {
-        this.user = result;
-        this.user.password=null
+        this.questionModels = this.qService.getQuestionsForUser(result);
       });
+    } else {
+      this.questionModels = this.qService.getQuestionsForUser();
     }
   }
 
